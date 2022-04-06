@@ -1,0 +1,36 @@
+[
+  {
+    "path": "posts/welcome/",
+    "title": "Welcome to NCAA Basketball Distill",
+    "description": "Welcome to my new blog, NCAA Basketball Distill. I will be blogging\nabout men's and women's basketball here.",
+    "author": [
+      {
+        "name": "Colin Kohoutek",
+        "url": "https://example.com/norajones"
+      }
+    ],
+    "date": "2022-04-01",
+    "categories": [],
+    "contents": "\r\n\r\n\r\n\r\n",
+    "preview": {},
+    "last_modified": "2022-04-01T11:25:08-06:00",
+    "input_file": "welcome.knit.md"
+  },
+  {
+    "path": "posts/2022-04-01-introduction/",
+    "title": "Introduction",
+    "description": "Introduction to my plans",
+    "author": [
+      {
+        "name": "Colin Kohoutek",
+        "url": "https://example.com/norajones"
+      }
+    ],
+    "date": "2022-04-01",
+    "categories": [],
+    "contents": "\r\nIntroduction\r\nHello. My name is Colin Kohoutek and this is my blog on NCAA basketball. I currently have ELO ratings for men’s and plan to add women and more advanced ratings systems. An ELO rating is a very common, simple method to rate opponents (https://en.wikipedia.org/wiki/Elo_rating_system). Basically you calculate the difference in rating between two teams to get an expected win percentage. A 100 point difference is a 64% win expectancy. Yuo then update the two ratings based on the outcome. The lower the expected win percentage the bigger rating boost if that team does win.\r\n\r\n\r\n\r\n",
+    "preview": {},
+    "last_modified": "2022-04-05T20:17:58-06:00",
+    "input_file": "introduction.knit.md"
+  }
+]

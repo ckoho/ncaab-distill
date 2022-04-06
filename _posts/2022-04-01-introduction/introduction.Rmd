@@ -1,0 +1,23 @@
+---
+title: "Introduction"
+description: |
+  Introduction to my plans
+author:
+  - name: Colin Kohoutek
+    url: https://example.com/norajones
+date: 2022-04-01
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+
+```
+## Introduction
+
+Hello. My name is Colin Kohoutek and this is my blog on NCAA basketball. I currently have ELO ratings for men's and plan to add women and more advanced ratings systems.
+An ELO rating is a very common, simple method to rate opponents (https://en.wikipedia.org/wiki/Elo_rating_system). IT was originall developed as a chess rating system. You calculate the difference in rating between two teams to get an expected win percentage. A 100 point difference is a 64% win expectancy. You then update the two ratings based on the outcome. The lower the expected win percentage the bigger rating boost if that team does win. I will go into how the adjustment is calculated in a future post. 
