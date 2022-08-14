@@ -1,5 +1,22 @@
 [
   {
+    "path": "posts/2022-08-14-elo-rating-system/",
+    "title": "ELO Rating System",
+    "description": "A short description of the post.",
+    "author": [
+      {
+        "name": "Colin Kohoutek",
+        "url": {}
+      }
+    ],
+    "date": "2022-08-14",
+    "categories": [],
+    "contents": "\r\nIntroduction\r\nMy first pass at creating a rating system is using the ever common\r\nelo ranking system. You can find a lot about it online.\r\nEveryone starts at a 1500 rating and then the rating moves up (good) or\r\ndown based on results. Elo compares the ratings between two opponents\r\nand calculates the expected win percentage based on the delta between\r\nthe teams. For example one team with a rating of 1200 would have the\r\nsame expected win rate playing an opponent of 1100, as a team ranked\r\n1800 playing one with a rating 1700. After the completion of the game,\r\neach teams rating is adjusted. If a team is a heavy favorite, the\r\nadjustment is minor, but if an underdog runs the adjustment is large.\r\nThe winning team always gains rating, and the losing teams go down. Elo\r\nis a zero sum calculation, so the adjustment is the same (one positive\r\nand one negative) for both teams.\r\nElo Calculation\r\nThe calculation for a team winning a game is \\[ P_a= \\frac{1}{1 + 10 ^ \\frac{R_b - R_a}{400}}\r\n\\] In this equation P_a is the probability of team a winning the\r\ngame, R_b is the rating of team b and R_a is the rating of team a. If\r\nthe game is at one team’s home court their rating is increased based on\r\nthe home court advantage. This will be covered in a later post. Once the\r\ngame is complete each team’s rating is adjusted based on the result. The\r\nadjustment equation is \\[ R_anew = R_a + K\r\n(O_a - P_a) \\]\r\nPreseason Ratings\r\nTo start the beginning of each year we have to adjust the end of\r\nseason ratings. Because we are not adjusting the rating based individual\r\nplayers, we don’t factor in graduation, transfers, new recruits, or\r\nexpected player development. For this simple system we just use the last\r\ntwo year’s ranking and a little regression to the mean. The current\r\nadjustment is taking 50% for the end of year ranking, 30% their previous\r\nyear ranking, and 20% 1500 (which is the mean).\r\nChecking the Accuracy\r\nI am going to use two different methods to evaluate to accuracy and\r\ndetermine the best K value to use. Those are using a log loss\r\ncalculation and bucketing the results into groups and checking expected\r\nversus actual outcomes.\r\nLog Loss\r\nBucketed Results\r\n\r\n\r\n\r\n",
+    "preview": {},
+    "last_modified": "2022-08-22T06:09:26-06:00",
+    "input_file": "elo-rating-system.knit.md"
+  },
+  {
     "path": "posts/welcome/",
     "title": "Welcome to NCAA Basketball Distill",
     "description": "Welcome to my new blog, NCAA Basketball Distill. I will be blogging\nabout men's and women's basketball here.",
