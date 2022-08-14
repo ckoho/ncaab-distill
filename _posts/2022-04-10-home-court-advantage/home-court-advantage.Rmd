@@ -1,0 +1,32 @@
+---
+title: "Home Court Advantage"
+description: |
+  Looking into home court impact in basketball.
+draft: true
+  author:
+  - name: Colin Kohoutek
+    url: https://ckohoutek.netlify.app/
+date: 2022-04-10
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+# Introduction
+Across all sports the home team tends to win at a higher clip when adjusting for team quality. In order to properly calibrate our ratings this must be factored in.
+# Ways To Analyze Home Court Advantage
+## Conference Results
+## Home and Away Results
+# Home Court Stability
+It is important to determine how quickly home court advantage stabilizes for each season. This is because if home court advantage changes in the early (2021 due to reduced crowds) we need to pick up on it quickly during the season to adjust our predictions and ratings adjustments for that season. It is easy to know the home court advantage when the season completes, but that does not provide any help for in season projections.  
+#Future Steps
+The above two options is just a broad way to analyze home court. It gets you most of the way there without taking further steps to get the last 10% or so correct. The There are more ways to take home court calculations to the next level. There are a few other factors that could impact home court.
+1. Distance traveled by the road team. The further traveled the more jet lag and other impacts you could see. My assumption is east to west travel is harder than north to south, but will need to confirm.
+2. Days spent on the road. Most road trips consist of two games so perhaps being on the second game and away from your bed longer could have an impact.
+3. Time of the game. A west coast team playing on the east coast in the afternoon could be earlier than they are used to playing. Similarly an east coast team playing on the west coast at night might be tired and not at peak performance levels. 
+4. Arena specific impacts. A louder crowd might also have an impact. Also if it is a large gym it can impact the visual oft he opposing team and cause them to shoot worse. 
+# Conclusions

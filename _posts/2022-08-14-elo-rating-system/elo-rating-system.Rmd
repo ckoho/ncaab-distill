@@ -1,0 +1,24 @@
+---
+title: "ELO Rating System"
+description: |
+  A short description of the post.
+author: Colin Kohoutek
+date: 2022-08-14
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+## Introduction
+My first pass at creating a rating system is using the ever common ELO system. You can find a lot about it [online](https://en.wikipedia.org/wiki/Elo_rating_system). Everyone starts at a 1500 rating and then the rating moves up (good) or down based on results. Elo compares the ratings between two opponents and calculates the expected win percentage based on that delta. For example one team with a rating of 1200 would have the same expected win rate playing an opponent of 1100, as a team ranked 1800 playing one with a rating 1700. After the completion of the game, each teams rating is adjusted. If a team is a heavy favorite, the adjustment is minor, but if an underdog runs the adjust is large. The winning team always gains rating, and the losing teams loses. Elo is a zero sum calculation, so the adjustment is the same for both teams.
+
+## Elo Calculation
+The calculation for a team winning a game is $$ P_a= \frac{1}{1 + 10 ^ \frac{R_b - R_a}{400}} $$.
+
+
+## Checking the Accuracy
+### Log Loss

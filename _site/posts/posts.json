@@ -1,5 +1,22 @@
 [
   {
+    "path": "posts/2022-08-14-elo-rating-system/",
+    "title": "ELO Rating System",
+    "description": "A short description of the post.",
+    "author": [
+      {
+        "name": "Colin Kohoutek",
+        "url": {}
+      }
+    ],
+    "date": "2022-08-14",
+    "categories": [],
+    "contents": "\r\nIntroduction\r\nMy first pass at creating a rating system is using the ever common\r\nELO system. You can find a lot about it online.\r\nEveryone starts at a 1500 rating and then the rating moves up (good) or\r\ndown based on results. Elo compares the ratings between two opponents\r\nand calculates the expected win percentage based on that delta. For\r\nexample one team with a rating of 1200 would have the same expected win\r\nrate playing an opponent of 1100, as a team ranked 1800 playing one with\r\na rating 1700. After the completion of the game, each teams rating is\r\nadjusted. If a team is a heavy favorite, the adjustment is minor, but if\r\nan underdog runs the adjust is large. The winning team always gains\r\nrating, and the losing teams loses. Elo is a zero sum calculation, so\r\nthe adjustment is the same for both teams.\r\nElo Calculation\r\nThe calculation for a team winning a game is \\[ P_a= \\frac{1}{1 + 10 ^ \\frac{R_b - R_a}{400}}\r\n\\].\r\nChecking the Accuracy\r\nLog Loss\r\n\r\n\r\n\r\n",
+    "preview": {},
+    "last_modified": "2022-08-14T14:16:30-06:00",
+    "input_file": "elo-rating-system.knit.md"
+  },
+  {
     "path": "posts/welcome/",
     "title": "Welcome to NCAA Basketball Distill",
     "description": "Welcome to my new blog, NCAA Basketball Distill. I will be blogging\nabout men's and women's basketball here.",

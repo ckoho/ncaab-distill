@@ -1,5 +1,5 @@
 ---
-title: "NCAA Basketball Distill"
+title: "NCAA Basketball Analysis"
 site: distill::distill_website
 listing: posts
 ---

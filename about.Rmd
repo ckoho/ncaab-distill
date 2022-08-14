@@ -1,7 +1,7 @@
 ---
 title: "About this blog"
 description: |
-  Some additional details about the blog
+  Using college basketball to improve my data analysis skills. My name is Colin Kohoutek. 
 ---
 
 ```{r setup, include=FALSE}
