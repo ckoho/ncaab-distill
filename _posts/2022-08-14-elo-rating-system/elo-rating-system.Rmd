@@ -7,6 +7,8 @@ date: 2022-08-14
 output:
   distill::distill_article:
     self_contained: false
+    toc: true
+    toc_depth: 3
 ---
 
 
@@ -14,31 +16,17 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 ## Introduction
-<<<<<<< HEAD
 My first pass at creating a rating system is using the ever common elo ranking system. You can find a lot about it [online](https://en.wikipedia.org/wiki/Elo_rating_system). Everyone starts at a 1500 rating and then the rating moves up (good) or down based on results. Elo compares the ratings between two opponents and calculates the expected win percentage based on the delta between the teams. For example one team with a rating of 1200 would have the same expected win rate playing an opponent of 1100, as a team ranked 1800 playing one with a rating 1700. After the completion of the game, each teams rating is adjusted. If a team is a heavy favorite, the adjustment is minor, but if an underdog runs the adjustment is large. The winning team always gains rating, and the losing teams go down. Elo is a zero sum calculation, so the adjustment is the same (one positive and one negative) for both teams.
 
 ## Elo Calculation
 The calculation for a team winning a game is $$ P_a= \frac{1}{1 + 10 ^ \frac{R_b - R_a}{400}} $$ In this equation P_a is the probability of team a winning the game, R_b is the rating of team b and R_a is the rating of team a. If the game is at one team's home court their rating is increased based on the home court advantage. This will be covered in a later post. Once the game is complete each team's rating is adjusted based on the result. The adjustment equation is $$ R_anew = R_a + K (O_a - P_a) $$ Ranew is the updated ranking for team a. K is a constant that scales the adjustment. The larger K is the more dependent the rankings are on the most recent results, and thus would be more elastic. The goal is to chose a k that reflects team's skill throughout the year, but does not cause wild swing in a team's ranking. I am going to use a k set to be 27. O_a is the outcome for team a. Since basketball only has loss and wins, a win is 1 and a loss is 0. P_a is the probability of winning and that equation is shown earlier in this example.
 
 ### Example Calculation
-Here I will run through an example to explain how the works. Say Montana (rating: 1500) is playing Montana State (rating: 1600) on a neutral court.
+Here I will run through an example to explain how the works. Say Montana (team A, rating: 1500) is playing Montana State (team B, rating: 1600) on a neutral court. If one team was home their rating would be increased by the home court advantage amount. Montana would have a win probability, or expected outcome of $\frac{1}{1 + 10 ^ \frac{1600 - 1500}{400}} = .3599 \approx 36\%$ Not surprisingly inverting those rating give Montana State a probability of ~64%. Obviously, Montana State wins this game, so it is time to adjust the rankings. Assuming k = 27, the adjustment is $$R_anew = 1500 + 27 (0 - .3599) \approx 1490.28$$ $$R_bnew = 1600 + 27 (1-.6401) \approx 1609.72$$ Both teams ratings moved by 9.72. If Montana had one the adjustment would have been 17.28 in the other direction for each team. There is a little more to the adjustment to make it more accurate, but that is covered in a later post. 
 
 ### Preseason Ratings
 To start the beginning of each year we have to adjust the end of season ratings. Because we are not adjusting the rating based individual players, we don't factor in graduation, transfers, new recruits, or expected player development. For this simple system we just use the last two year's ranking and a little regression to the mean. The current adjustment is taking 50% for the end of year ranking, 30% their previous year ranking, and 20% 1500 (which is the mean). 
 
 ## Checking the Accuracy
-I am going to use two different methods to evaluate to accuracy and determine the best K value to use. Those are using a log loss calculation and bucketing the results into groups and checking expected versus actual outcomes.
 
 ### Log Loss
-
-### Bucketed Results
-=======
-My first pass at creating a rating system is using the ever common ELO system. You can find a lot about it [online](https://en.wikipedia.org/wiki/Elo_rating_system). Everyone starts at a 1500 rating and then the rating moves up (good) or down based on results. Elo compares the ratings between two opponents and calculates the expected win percentage based on that delta. For example one team with a rating of 1200 would have the same expected win rate playing an opponent of 1100, as a team ranked 1800 playing one with a rating 1700. After the completion of the game, each teams rating is adjusted. If a team is a heavy favorite, the adjustment is minor, but if an underdog runs the adjust is large. The winning team always gains rating, and the losing teams loses. Elo is a zero sum calculation, so the adjustment is the same for both teams.
-
-## Elo Calculation
-The calculation for a team winning a game is $$ P_a= \frac{1}{1 + 10 ^ \frac{R_b - R_a}{400}} $$.
-
-
-## Checking the Accuracy
-### Log Loss
->>>>>>> cb6d3f3b8feb8731093a877f86a24b89bfec1372

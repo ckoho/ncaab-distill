@@ -89,7 +89,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_meta_tags-->
 <title>NCAA Basketball Blog: ELO Rating System</title>
 
-<meta property="description" itemprop="description" content="A short description of the post."/>
+<meta property="description" itemprop="description" content="Explanation of initial Elo ranking system for NCAA Men&#39;s Basketball."/>
 
 
 <!--  https://schema.org/Article -->
@@ -100,20 +100,20 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
 <meta property="og:title" content="NCAA Basketball Blog: ELO Rating System"/>
 <meta property="og:type" content="article"/>
-<meta property="og:description" content="A short description of the post."/>
+<meta property="og:description" content="Explanation of initial Elo ranking system for NCAA Men&#39;s Basketball."/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:site_name" content="NCAA Basketball Blog"/>
 
 <!--  https://dev.twitter.com/cards/types/summary -->
 <meta property="twitter:card" content="summary"/>
 <meta property="twitter:title" content="NCAA Basketball Blog: ELO Rating System"/>
-<meta property="twitter:description" content="A short description of the post."/>
+<meta property="twitter:description" content="Explanation of initial Elo ranking system for NCAA Men&#39;s Basketball."/>
 
 <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["ELO Rating System"]},{"type":"character","attributes":{},"value":["A short description of the post."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Colin Kohoutek"]}]}]},{"type":"character","attributes":{},"value":["2022-08-14"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["ELO Rating System"]},{"type":"character","attributes":{},"value":["Explanation of initial Elo ranking system for NCAA Men's Basketball."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Colin Kohoutek"]}]}]},{"type":"character","attributes":{},"value":["2022-08-14"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc","toc_depth"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[3]}]}]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -2066,7 +2066,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"ELO Rating System","description":"A short description of the post.","authors":[{"author":"Colin Kohoutek","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2022-08-14T00:00:00.000-06:00","citationText":"Kohoutek, 2022"}
+{"title":"ELO Rating System","description":"Explanation of initial Elo ranking system for NCAA Men's Basketball.","authors":[{"author":"Colin Kohoutek","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2022-08-14T00:00:00.000-06:00","citationText":"Kohoutek, 2022"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2092,7 +2092,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <h1>ELO Rating System</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>A short description of the post.</p></p>
+<p><p>Explanation of initial Elo ranking system for NCAA Men’s
+Basketball.</p></p>
 </div>
 
 <div class="d-byline">
@@ -2103,9 +2104,25 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#elo-calculation">Elo Calculation</a>
+<ul>
+<li><a href="#example-calculation">Example Calculation</a></li>
+<li><a href="#preseason-ratings">Preseason Ratings</a></li>
+</ul></li>
+<li><a href="#checking-the-accuracy">Checking the Accuracy</a>
+<ul>
+<li><a href="#log-loss">Log Loss</a></li>
+</ul></li>
+</ul>
+</nav>
+</div>
 <h2 id="introduction">Introduction</h2>
 <p>My first pass at creating a rating system is using the ever common
-<<<<<<< HEAD
 elo ranking system. You can find a lot about it <a
 href="https://en.wikipedia.org/wiki/Elo_rating_system">online</a>.
 Everyone starts at a 1500 rating and then the rating moves up (good) or
@@ -2128,7 +2145,29 @@ the game is at one team’s home court their rating is increased based on
 the home court advantage. This will be covered in a later post. Once the
 game is complete each team’s rating is adjusted based on the result. The
 adjustment equation is <span class="math display">\[ R_anew = R_a + K
-(O_a - P_a) \]</span></p>
+(O_a - P_a) \]</span> Ranew is the updated ranking for team a. K is a
+constant that scales the adjustment. The larger K is the more dependent
+the rankings are on the most recent results, and thus would be more
+elastic. The goal is to chose a k that reflects team’s skill throughout
+the year, but does not cause wild swing in a team’s ranking. I am going
+to use a k set to be 27. O_a is the outcome for team a. Since basketball
+only has loss and wins, a win is 1 and a loss is 0. P_a is the
+probability of winning and that equation is shown earlier in this
+example.</p>
+<h3 id="example-calculation">Example Calculation</h3>
+<p>Here I will run through an example to explain how the works. Say
+Montana (team A, rating: 1500) is playing Montana State (team B, rating:
+1600) on a neutral court. If one team was home their rating would be
+increased by the home court advantage amount. Montana would have a win
+probability, or expected outcome of <span
+class="math inline">\(\frac{1}{1 + 10 ^ \frac{1600 - 1500}{400}} = .3599
+\approx 36\%\)</span> Not surprisingly inverting those rating give
+Montana State a probability of ~64%. Obviously, Montana State wins this
+game, so it is time to adjust the rankings. Assuming k = 27, the
+adjustment is <span class="math display">\[R_anew = 1500 + 27 (0 -
+.3599) \approx 1490.28\]</span> <span class="math display">\[R_bnew =
+1600 + 27 (1-.6401) \approx 1609.72\]</span> Both teams ratings moved by
+9.72.</p>
 <h3 id="preseason-ratings">Preseason Ratings</h3>
 <p>To start the beginning of each year we have to adjust the end of
 season ratings. Because we are not adjusting the rating based individual
@@ -2138,32 +2177,7 @@ two year’s ranking and a little regression to the mean. The current
 adjustment is taking 50% for the end of year ranking, 30% their previous
 year ranking, and 20% 1500 (which is the mean).</p>
 <h2 id="checking-the-accuracy">Checking the Accuracy</h2>
-<p>I am going to use two different methods to evaluate to accuracy and
-determine the best K value to use. Those are using a log loss
-calculation and bucketing the results into groups and checking expected
-versus actual outcomes.</p>
 <h3 id="log-loss">Log Loss</h3>
-<h3 id="bucketed-results">Bucketed Results</h3>
-=======
-ELO system. You can find a lot about it <a
-href="https://en.wikipedia.org/wiki/Elo_rating_system">online</a>.
-Everyone starts at a 1500 rating and then the rating moves up (good) or
-down based on results. Elo compares the ratings between two opponents
-and calculates the expected win percentage based on that delta. For
-example one team with a rating of 1200 would have the same expected win
-rate playing an opponent of 1100, as a team ranked 1800 playing one with
-a rating 1700. After the completion of the game, each teams rating is
-adjusted. If a team is a heavy favorite, the adjustment is minor, but if
-an underdog runs the adjust is large. The winning team always gains
-rating, and the losing teams loses. Elo is a zero sum calculation, so
-the adjustment is the same for both teams.</p>
-<h2 id="elo-calculation">Elo Calculation</h2>
-<p>The calculation for a team winning a game is <span
-class="math display">\[ P_a= \frac{1}{1 + 10 ^ \frac{R_b - R_a}{400}}
-\]</span>.</p>
-<h2 id="checking-the-accuracy">Checking the Accuracy</h2>
-<h3 id="log-loss">Log Loss</h3>
->>>>>>> cb6d3f3b8feb8731093a877f86a24b89bfec1372
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->

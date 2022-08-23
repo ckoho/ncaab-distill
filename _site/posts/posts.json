@@ -2,7 +2,7 @@
   {
     "path": "posts/2022-08-14-elo-rating-system/",
     "title": "ELO Rating System",
-    "description": "A short description of the post.",
+    "description": "Explanation of initial Elo ranking system for NCAA Men's Basketball.",
     "author": [
       {
         "name": "Colin Kohoutek",
@@ -11,27 +11,10 @@
     ],
     "date": "2022-08-14",
     "categories": [],
-    "contents": "\r\nIntroduction\r\nMy first pass at creating a rating system is using the ever common\r\nelo ranking system. You can find a lot about it online.\r\nEveryone starts at a 1500 rating and then the rating moves up (good) or\r\ndown based on results. Elo compares the ratings between two opponents\r\nand calculates the expected win percentage based on the delta between\r\nthe teams. For example one team with a rating of 1200 would have the\r\nsame expected win rate playing an opponent of 1100, as a team ranked\r\n1800 playing one with a rating 1700. After the completion of the game,\r\neach teams rating is adjusted. If a team is a heavy favorite, the\r\nadjustment is minor, but if an underdog runs the adjustment is large.\r\nThe winning team always gains rating, and the losing teams go down. Elo\r\nis a zero sum calculation, so the adjustment is the same (one positive\r\nand one negative) for both teams.\r\nElo Calculation\r\nThe calculation for a team winning a game is \\[ P_a= \\frac{1}{1 + 10 ^ \\frac{R_b - R_a}{400}}\r\n\\] In this equation P_a is the probability of team a winning the\r\ngame, R_b is the rating of team b and R_a is the rating of team a. If\r\nthe game is at one team’s home court their rating is increased based on\r\nthe home court advantage. This will be covered in a later post. Once the\r\ngame is complete each team’s rating is adjusted based on the result. The\r\nadjustment equation is \\[ R_anew = R_a + K\r\n(O_a - P_a) \\]\r\nPreseason Ratings\r\nTo start the beginning of each year we have to adjust the end of\r\nseason ratings. Because we are not adjusting the rating based individual\r\nplayers, we don’t factor in graduation, transfers, new recruits, or\r\nexpected player development. For this simple system we just use the last\r\ntwo year’s ranking and a little regression to the mean. The current\r\nadjustment is taking 50% for the end of year ranking, 30% their previous\r\nyear ranking, and 20% 1500 (which is the mean).\r\nChecking the Accuracy\r\nI am going to use two different methods to evaluate to accuracy and\r\ndetermine the best K value to use. Those are using a log loss\r\ncalculation and bucketing the results into groups and checking expected\r\nversus actual outcomes.\r\nLog Loss\r\nBucketed Results\r\n\r\n\r\n\r\n",
+    "contents": "\r\n\r\nContents\r\nIntroduction\r\nElo Calculation\r\nExample Calculation\r\nPreseason Ratings\r\n\r\nChecking the Accuracy\r\nLog Loss\r\n\r\n\r\nIntroduction\r\nMy first pass at creating a rating system is using the ever common\r\nelo ranking system. You can find a lot about it online.\r\nEveryone starts at a 1500 rating and then the rating moves up (good) or\r\ndown based on results. Elo compares the ratings between two opponents\r\nand calculates the expected win percentage based on the delta between\r\nthe teams. For example one team with a rating of 1200 would have the\r\nsame expected win rate playing an opponent of 1100, as a team ranked\r\n1800 playing one with a rating 1700. After the completion of the game,\r\neach teams rating is adjusted. If a team is a heavy favorite, the\r\nadjustment is minor, but if an underdog runs the adjustment is large.\r\nThe winning team always gains rating, and the losing teams go down. Elo\r\nis a zero sum calculation, so the adjustment is the same (one positive\r\nand one negative) for both teams.\r\nElo Calculation\r\nThe calculation for a team winning a game is \\[ P_a= \\frac{1}{1 + 10 ^ \\frac{R_b - R_a}{400}}\r\n\\] In this equation P_a is the probability of team a winning the\r\ngame, R_b is the rating of team b and R_a is the rating of team a. If\r\nthe game is at one team’s home court their rating is increased based on\r\nthe home court advantage. This will be covered in a later post. Once the\r\ngame is complete each team’s rating is adjusted based on the result. The\r\nadjustment equation is \\[ R_anew = R_a + K\r\n(O_a - P_a) \\] Ranew is the updated ranking for team a. K is a\r\nconstant that scales the adjustment. The larger K is the more dependent\r\nthe rankings are on the most recent results, and thus would be more\r\nelastic. The goal is to chose a k that reflects team’s skill throughout\r\nthe year, but does not cause wild swing in a team’s ranking. I am going\r\nto use a k set to be 27. O_a is the outcome for team a. Since basketball\r\nonly has loss and wins, a win is 1 and a loss is 0. P_a is the\r\nprobability of winning and that equation is shown earlier in this\r\nexample.\r\nExample Calculation\r\nHere I will run through an example to explain how the works. Say\r\nMontana (team A, rating: 1500) is playing Montana State (team B, rating:\r\n1600) on a neutral court. If one team was home their rating would be\r\nincreased by the home court advantage amount. Montana would have a win\r\nprobability, or expected outcome of \\(\\frac{1}{1 + 10 ^ \\frac{1600 - 1500}{400}} = .3599\r\n\\approx 36\\%\\) Not surprisingly inverting those rating give\r\nMontana State a probability of ~64%. Obviously, Montana State wins this\r\ngame, so it is time to adjust the rankings. Assuming k = 27, the\r\nadjustment is \\[R_anew = 1500 + 27 (0 -\r\n.3599) \\approx 1490.28\\] \\[R_bnew =\r\n1600 + 27 (1-.6401) \\approx 1609.72\\] Both teams ratings moved by\r\n9.72.\r\nPreseason Ratings\r\nTo start the beginning of each year we have to adjust the end of\r\nseason ratings. Because we are not adjusting the rating based individual\r\nplayers, we don’t factor in graduation, transfers, new recruits, or\r\nexpected player development. For this simple system we just use the last\r\ntwo year’s ranking and a little regression to the mean. The current\r\nadjustment is taking 50% for the end of year ranking, 30% their previous\r\nyear ranking, and 20% 1500 (which is the mean).\r\nChecking the Accuracy\r\nLog Loss\r\n\r\n\r\n\r\n",
     "preview": {},
-    "last_modified": "2022-08-22T06:09:26-06:00",
+    "last_modified": "2022-08-22T21:02:10-06:00",
     "input_file": "elo-rating-system.knit.md"
-  },
-  {
-    "path": "posts/welcome/",
-    "title": "Welcome to NCAA Basketball Distill",
-    "description": "Welcome to my new blog, NCAA Basketball Distill. I will be blogging\nabout men's and women's basketball here.",
-    "author": [
-      {
-        "name": "Colin Kohoutek",
-        "url": "https://example.com/norajones"
-      }
-    ],
-    "date": "2022-04-01",
-    "categories": [],
-    "contents": "\r\n\r\n\r\n\r\n",
-    "preview": {},
-    "last_modified": "2022-04-01T11:25:08-06:00",
-    "input_file": "welcome.knit.md"
   },
   {
     "path": "posts/2022-04-01-introduction/",
@@ -47,7 +30,24 @@
     "categories": [],
     "contents": "\r\nIntroduction\r\nHello. My name is Colin Kohoutek and this is my blog on NCAA basketball. I currently have ELO ratings for men’s and plan to add women and more advanced ratings systems. An ELO rating is a very common, simple method to rate opponents (https://en.wikipedia.org/wiki/Elo_rating_system). Basically you calculate the difference in rating between two teams to get an expected win percentage. A 100 point difference is a 64% win expectancy. Yuo then update the two ratings based on the outcome. The lower the expected win percentage the bigger rating boost if that team does win.\r\n\r\n\r\n\r\n",
     "preview": {},
-    "last_modified": "2022-04-05T20:17:58-06:00",
-    "input_file": "introduction.knit.md"
+    "last_modified": "2022-04-05T20:18:00-06:00",
+    "input_file": {}
+  },
+  {
+    "path": "posts/welcome/",
+    "title": "Welcome to NCAA Basketball Distill",
+    "description": "Welcome to my new blog, NCAA Basketball Distill. I will be blogging\nabout men's and women's basketball here.",
+    "author": [
+      {
+        "name": "Colin Kohoutek",
+        "url": "https://example.com/norajones"
+      }
+    ],
+    "date": "2022-04-01",
+    "categories": [],
+    "contents": "\r\n\r\n\r\n\r\n",
+    "preview": {},
+    "last_modified": "2022-04-01T11:25:09-06:00",
+    "input_file": {}
   }
 ]
