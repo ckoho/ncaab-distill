@@ -1,7 +1,7 @@
 ---
 title: "ELO Rating System"
 description: |
-  A short description of the post.
+  Explanation of initial Elo ranking system for NCAA Men's Basketball.
 author: Colin Kohoutek
 date: 2022-08-14
 output:
@@ -14,6 +14,7 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 ## Introduction
+<<<<<<< HEAD
 My first pass at creating a rating system is using the ever common elo ranking system. You can find a lot about it [online](https://en.wikipedia.org/wiki/Elo_rating_system). Everyone starts at a 1500 rating and then the rating moves up (good) or down based on results. Elo compares the ratings between two opponents and calculates the expected win percentage based on the delta between the teams. For example one team with a rating of 1200 would have the same expected win rate playing an opponent of 1100, as a team ranked 1800 playing one with a rating 1700. After the completion of the game, each teams rating is adjusted. If a team is a heavy favorite, the adjustment is minor, but if an underdog runs the adjustment is large. The winning team always gains rating, and the losing teams go down. Elo is a zero sum calculation, so the adjustment is the same (one positive and one negative) for both teams.
 
 ## Elo Calculation
@@ -31,3 +32,13 @@ I am going to use two different methods to evaluate to accuracy and determine th
 ### Log Loss
 
 ### Bucketed Results
+=======
+My first pass at creating a rating system is using the ever common ELO system. You can find a lot about it [online](https://en.wikipedia.org/wiki/Elo_rating_system). Everyone starts at a 1500 rating and then the rating moves up (good) or down based on results. Elo compares the ratings between two opponents and calculates the expected win percentage based on that delta. For example one team with a rating of 1200 would have the same expected win rate playing an opponent of 1100, as a team ranked 1800 playing one with a rating 1700. After the completion of the game, each teams rating is adjusted. If a team is a heavy favorite, the adjustment is minor, but if an underdog runs the adjust is large. The winning team always gains rating, and the losing teams loses. Elo is a zero sum calculation, so the adjustment is the same for both teams.
+
+## Elo Calculation
+The calculation for a team winning a game is $$ P_a= \frac{1}{1 + 10 ^ \frac{R_b - R_a}{400}} $$.
+
+
+## Checking the Accuracy
+### Log Loss
+>>>>>>> cb6d3f3b8feb8731093a877f86a24b89bfec1372
