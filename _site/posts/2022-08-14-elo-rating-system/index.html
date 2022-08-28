@@ -118,7 +118,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["elo-rating-system_files/anchor-4.2.2/anchor.min.js","elo-rating-system_files/bowser-1.9.3/bowser.min.js","elo-rating-system_files/distill-2.2.21/template.v2.js","elo-rating-system_files/header-attrs-2.14/header-attrs.js","elo-rating-system_files/jquery-3.6.0/jquery-3.6.0.js","elo-rating-system_files/jquery-3.6.0/jquery-3.6.0.min.js","elo-rating-system_files/jquery-3.6.0/jquery-3.6.0.min.map","elo-rating-system_files/popper-2.6.0/popper.min.js","elo-rating-system_files/tippy-6.2.7/tippy-bundle.umd.min.js","elo-rating-system_files/tippy-6.2.7/tippy-light-border.css","elo-rating-system_files/tippy-6.2.7/tippy.css","elo-rating-system_files/tippy-6.2.7/tippy.umd.min.js","elo-rating-system_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["elo-rating-system_files/anchor-4.2.2/anchor.min.js","elo-rating-system_files/bowser-1.9.3/bowser.min.js","elo-rating-system_files/distill-2.2.21/template.v2.js","elo-rating-system_files/figure-html5/unnamed-chunk-2-1.png","elo-rating-system_files/figure-html5/unnamed-chunk-2-2.png","elo-rating-system_files/header-attrs-2.14/header-attrs.js","elo-rating-system_files/jquery-3.6.0/jquery-3.6.0.js","elo-rating-system_files/jquery-3.6.0/jquery-3.6.0.min.js","elo-rating-system_files/jquery-3.6.0/jquery-3.6.0.min.map","elo-rating-system_files/popper-2.6.0/popper.min.js","elo-rating-system_files/tippy-6.2.7/tippy-bundle.umd.min.js","elo-rating-system_files/tippy-6.2.7/tippy-light-border.css","elo-rating-system_files/tippy-6.2.7/tippy.css","elo-rating-system_files/tippy-6.2.7/tippy.umd.min.js","elo-rating-system_files/webcomponents-2.0.0/webcomponents.js","k_logloss.png","logloss.csv"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2117,6 +2117,7 @@ Basketball.</p></p>
 <li><a href="#checking-the-accuracy">Checking the Accuracy</a>
 <ul>
 <li><a href="#log-loss">Log Loss</a></li>
+<li><a href="#bucketed-results">Bucketed Results</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -2132,28 +2133,34 @@ the teams. For example one team with a rating of 1200 would have the
 same expected win rate playing an opponent of 1100, as a team ranked
 1800 playing one with a rating 1700. After the completion of the game,
 each teams rating is adjusted. If a team is a heavy favorite, the
-adjustment is minor, but if an underdog runs the adjustment is large.
-The winning team always gains rating, and the losing teams go down. Elo
-is a zero sum calculation, so the adjustment is the same (one positive
-and one negative) for both teams.</p>
+adjustment is minor, but if an underdog wins the adjustment is large.
+The winning team always gains rating points, and the losing teams go
+down. Elo is a zero sum calculation, so the adjustment is the same (one
+positive and one negative) for both teams.</p>
 <h2 id="elo-calculation">Elo Calculation</h2>
 <p>The calculation for a team winning a game is <span
 class="math display">\[ P_a= \frac{1}{1 + 10 ^ \frac{R_b - R_a}{400}}
-\]</span> In this equation P_a is the probability of team a winning the
-game, R_b is the rating of team b and R_a is the rating of team a. If
-the game is at one team’s home court their rating is increased based on
-the home court advantage. This will be covered in a later post. Once the
-game is complete each team’s rating is adjusted based on the result. The
-adjustment equation is <span class="math display">\[ R_anew = R_a + K
-(O_a - P_a) \]</span> Ranew is the updated ranking for team a. K is a
-constant that scales the adjustment. The larger K is the more dependent
-the rankings are on the most recent results, and thus would be more
-elastic. The goal is to chose a k that reflects team’s skill throughout
-the year, but does not cause wild swing in a team’s ranking. I am going
-to use a k set to be 27. O_a is the outcome for team a. Since basketball
-only has loss and wins, a win is 1 and a loss is 0. P_a is the
-probability of winning and that equation is shown earlier in this
-example.</p>
+\]</span> In this equation <span class="math inline">\(P_a\)</span> is
+the probability of team a winning the game, <span
+class="math inline">\(R_b\)</span> is the rating of team b and <span
+class="math inline">\(R_a\)</span> is the rating of team a. If the game
+is at one team’s home court their rating is increased based on the home
+court advantage. This will be covered in a later post. The probability
+for b just flips the <span class="math inline">\(R_a\)</span> and <span
+class="math inline">\(R_b\)</span> (or you can take <span
+class="math inline">\(1 - P_a\)</span>). Once the game is complete each
+team’s rating is adjusted based on the result. The adjustment equation
+is <span class="math display">\[ R_anew = R_a + K (O_a - P_a) \]</span>
+<span class="math inline">\(R_anew\)</span> is the updated ranking for
+team a. K is a constant that scales the adjustment. The larger K is the
+more dependent the rankings are on the most recent results, and thus
+would be more elastic. The goal is to chose a k that reflects team’s
+skill throughout the year, but does not cause wild swing in a team’s
+ranking. I am going to use a k set to be 27. <span
+class="math inline">\(O_a\)</span> is the outcome for team a. Since
+basketball only has loss and wins, a win is 1 and a loss is 0. <span
+class="math inline">\(P_a\)</span> is the probability of winning and
+that equation is shown earlier in this example.</p>
 <h3 id="example-calculation">Example Calculation</h3>
 <p>Here I will run through an example to explain how the works. Say
 Montana (team A, rating: 1500) is playing Montana State (team B, rating:
@@ -2167,7 +2174,9 @@ game, so it is time to adjust the rankings. Assuming k = 27, the
 adjustment is <span class="math display">\[R_anew = 1500 + 27 (0 -
 .3599) \approx 1490.28\]</span> <span class="math display">\[R_bnew =
 1600 + 27 (1-.6401) \approx 1609.72\]</span> Both teams ratings moved by
-9.72.</p>
+9.72. If Montana had one the adjustment would have been 17.28 in the
+other direction for each team. There is a little more to the adjustment
+to make it more accurate, but that is covered in a later post.</p>
 <h3 id="preseason-ratings">Preseason Ratings</h3>
 <p>To start the beginning of each year we have to adjust the end of
 season ratings. Because we are not adjusting the rating based individual
@@ -2177,7 +2186,497 @@ two year’s ranking and a little regression to the mean. The current
 adjustment is taking 50% for the end of year ranking, 30% their previous
 year ranking, and 20% 1500 (which is the mean).</p>
 <h2 id="checking-the-accuracy">Checking the Accuracy</h2>
+<p>I am using two measures to check the accuracy of my predictions and
+help choose the best k value. Those are log loss calculation and by
+bucketing the results by expected outcome.</p>
 <h3 id="log-loss">Log Loss</h3>
+<p>Log loss is a calcuation that compares expected result to actual
+result. It penalizes overconfidence. Without going into the gory details
+(more can be found <a
+href="https://www.analyticsvidhya.com/blog/2020/11/binary-cross-entropy-aka-log-loss-the-cost-function-used-in-logistic-regression/">here</a>
+and <a
+href="https://analyticsindiamag.com/all-you-need-to-know-about-log-loss-in-machine-learning/">here</a>)
+if we said every game was a 50-50 coin flip the log loss would be .693,
+so we want to have a value lower than that to say our ranking is adding
+value. The plot below calculated log loss over multiple season on a
+range of k values. It appears to be lowest in the 25-30 range.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="k_logloss.png" width="972" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div id="fcqhqnuoft" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#fcqhqnuoft .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#fcqhqnuoft .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#fcqhqnuoft .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#fcqhqnuoft .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#fcqhqnuoft .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#fcqhqnuoft .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#fcqhqnuoft .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#fcqhqnuoft .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#fcqhqnuoft .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#fcqhqnuoft .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#fcqhqnuoft .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#fcqhqnuoft .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#fcqhqnuoft .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#fcqhqnuoft .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#fcqhqnuoft .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#fcqhqnuoft .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#fcqhqnuoft .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fcqhqnuoft .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#fcqhqnuoft .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#fcqhqnuoft .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fcqhqnuoft .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#fcqhqnuoft .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#fcqhqnuoft .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#fcqhqnuoft .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fcqhqnuoft .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#fcqhqnuoft .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#fcqhqnuoft .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#fcqhqnuoft .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#fcqhqnuoft .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fcqhqnuoft .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#fcqhqnuoft .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fcqhqnuoft .gt_left {
+  text-align: left;
+}
+
+#fcqhqnuoft .gt_center {
+  text-align: center;
+}
+
+#fcqhqnuoft .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#fcqhqnuoft .gt_font_normal {
+  font-weight: normal;
+}
+
+#fcqhqnuoft .gt_font_bold {
+  font-weight: bold;
+}
+
+#fcqhqnuoft .gt_font_italic {
+  font-style: italic;
+}
+
+#fcqhqnuoft .gt_super {
+  font-size: 65%;
+}
+
+#fcqhqnuoft .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#fcqhqnuoft .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#fcqhqnuoft .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#fcqhqnuoft .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#fcqhqnuoft .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#fcqhqnuoft .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#fcqhqnuoft .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">k</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">2009</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">2010</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">2011</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">2012</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">2013</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">2014</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_right">25</td>
+<td class="gt_row gt_right" style="background-color: #D60C00; color: #FFFFFF;">0.53709</td>
+<td class="gt_row gt_right" style="background-color: #D60C00; color: #FFFFFF;">0.52064</td>
+<td class="gt_row gt_right" style="background-color: #D5D5FF; color: #000000;">0.52509</td>
+<td class="gt_row gt_right" style="background-color: #D60C00; color: #FFFFFF;">0.51568</td>
+<td class="gt_row gt_right" style="background-color: #4500AD; color: #FFFFFF;">0.53044</td>
+<td class="gt_row gt_right" style="background-color: #4500AD; color: #FFFFFF;">0.53167</td></tr>
+    <tr><td class="gt_row gt_right">26</td>
+<td class="gt_row gt_right" style="background-color: #FF8186; color: #000000;">0.53677</td>
+<td class="gt_row gt_right" style="background-color: #FFB2CC; color: #000000;">0.52036</td>
+<td class="gt_row gt_right" style="background-color: #6B58EF; color: #FFFFFF;">0.52497</td>
+<td class="gt_row gt_right" style="background-color: #E8CDF4; color: #000000;">0.51536</td>
+<td class="gt_row gt_right" style="background-color: #2900D0; color: #FFFFFF;">0.53057</td>
+<td class="gt_row gt_right" style="background-color: #3516D5; color: #FFFFFF;">0.53183</td></tr>
+    <tr><td class="gt_row gt_right">27</td>
+<td class="gt_row gt_right" style="background-color: #CECAFF; color: #000000;">0.53652</td>
+<td class="gt_row gt_right" style="background-color: #B7B1FF; color: #000000;">0.52021</td>
+<td class="gt_row gt_right" style="background-color: #4500AD; color: #FFFFFF;">0.52489</td>
+<td class="gt_row gt_right" style="background-color: #7465F3; color: #000000;">0.51518</td>
+<td class="gt_row gt_right" style="background-color: #8380FC; color: #000000;">0.53082</td>
+<td class="gt_row gt_right" style="background-color: #9C98FF; color: #000000;">0.53213</td></tr>
+    <tr><td class="gt_row gt_right">28</td>
+<td class="gt_row gt_right" style="background-color: #7B71F7; color: #000000;">0.53635</td>
+<td class="gt_row gt_right" style="background-color: #5137E1; color: #FFFFFF;">0.52008</td>
+<td class="gt_row gt_right" style="background-color: #9A96FF; color: #000000;">0.52502</td>
+<td class="gt_row gt_right" style="background-color: #3E00B9; color: #FFFFFF;">0.51507</td>
+<td class="gt_row gt_right" style="background-color: #D8D4FE; color: #000000;">0.53112</td>
+<td class="gt_row gt_right" style="background-color: #EBCBF2; color: #000000;">0.53244</td></tr>
+    <tr><td class="gt_row gt_right">29</td>
+<td class="gt_row gt_right" style="background-color: #2B00CE; color: #FFFFFF;">0.53621</td>
+<td class="gt_row gt_right" style="background-color: #4500AD; color: #FFFFFF;">0.51999</td>
+<td class="gt_row gt_right" style="background-color: #EBCBF2; color: #000000;">0.52511</td>
+<td class="gt_row gt_right" style="background-color: #3400C6; color: #FFFFFF;">0.51509</td>
+<td class="gt_row gt_right" style="background-color: #FF7983; color: #000000;">0.53147</td>
+<td class="gt_row gt_right" style="background-color: #FF7080; color: #000000;">0.53279</td></tr>
+    <tr><td class="gt_row gt_right">30</td>
+<td class="gt_row gt_right" style="background-color: #4500AD; color: #FFFFFF;">0.53613</td>
+<td class="gt_row gt_right" style="background-color: #5B43E6; color: #FFFFFF;">0.52009</td>
+<td class="gt_row gt_right" style="background-color: #D60C00; color: #FFFFFF;">0.52533</td>
+<td class="gt_row gt_right" style="background-color: #4500AD; color: #FFFFFF;">0.51505</td>
+<td class="gt_row gt_right" style="background-color: #D60C00; color: #FFFFFF;">0.53192</td>
+<td class="gt_row gt_right" style="background-color: #D60C00; color: #FFFFFF;">0.53321</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+</div>
+<h3 id="bucketed-results">Bucketed Results</h3>
+<p>Now that we know our predicitions are better than a coin flip the
+next thing is to confirm the results are roughly linear. If we say a
+team has a ten percent chance of winning they should win roughly 10% of
+those matchups. If each group wins as much as expected through the
+probability it tells us the model is calibrated accurately.</p>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->

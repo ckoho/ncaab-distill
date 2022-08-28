@@ -1,9 +1,11 @@
 ---
 title: "About this blog"
 description: |
-  Using college basketball to improve my data analysis skills. My name is Colin Kohoutek. 
+  Blog to improve my data analysis. My name is Colin Kohoutek. 
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
+
+Blog to improve my data analysis. My name is Colin Kohoutek. 
