@@ -118,7 +118,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["elo-rating-system_files/anchor-4.2.2/anchor.min.js","elo-rating-system_files/bowser-1.9.3/bowser.min.js","elo-rating-system_files/distill-2.2.21/template.v2.js","elo-rating-system_files/figure-html5/unnamed-chunk-2-1.png","elo-rating-system_files/figure-html5/unnamed-chunk-2-2.png","elo-rating-system_files/header-attrs-2.14/header-attrs.js","elo-rating-system_files/jquery-3.6.0/jquery-3.6.0.js","elo-rating-system_files/jquery-3.6.0/jquery-3.6.0.min.js","elo-rating-system_files/jquery-3.6.0/jquery-3.6.0.min.map","elo-rating-system_files/popper-2.6.0/popper.min.js","elo-rating-system_files/tippy-6.2.7/tippy-bundle.umd.min.js","elo-rating-system_files/tippy-6.2.7/tippy-light-border.css","elo-rating-system_files/tippy-6.2.7/tippy.css","elo-rating-system_files/tippy-6.2.7/tippy.umd.min.js","elo-rating-system_files/webcomponents-2.0.0/webcomponents.js","k_logloss.png","logloss.csv"]}
+  {"type":"character","attributes":{},"value":["all_year_logloss.csv","elo-rating-system_files/anchor-4.2.2/anchor.min.js","elo-rating-system_files/bowser-1.9.3/bowser.min.js","elo-rating-system_files/distill-2.2.21/template.v2.js","elo-rating-system_files/figure-html5/unnamed-chunk-2-1.png","elo-rating-system_files/figure-html5/unnamed-chunk-2-2.png","elo-rating-system_files/header-attrs-2.14/header-attrs.js","elo-rating-system_files/jquery-3.6.0/jquery-3.6.0.js","elo-rating-system_files/jquery-3.6.0/jquery-3.6.0.min.js","elo-rating-system_files/jquery-3.6.0/jquery-3.6.0.min.map","elo-rating-system_files/popper-2.6.0/popper.min.js","elo-rating-system_files/tippy-6.2.7/tippy-bundle.umd.min.js","elo-rating-system_files/tippy-6.2.7/tippy-light-border.css","elo-rating-system_files/tippy-6.2.7/tippy.css","elo-rating-system_files/tippy-6.2.7/tippy.umd.min.js","elo-rating-system_files/webcomponents-2.0.0/webcomponents.js","k_logloss.png","logloss.csv","prediction_accuracy_k27_plot.png","prediction_accuracy_k27_sample_plot.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2119,6 +2119,7 @@ Basketball.</p></p>
 <li><a href="#log-loss">Log Loss</a></li>
 <li><a href="#bucketed-results">Bucketed Results</a></li>
 </ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
 </ul>
 </nav>
 </div>
@@ -2203,13 +2204,18 @@ range of k values. It appears to be lowest in the 25-30 range.</p>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="k_logloss.png" width="972" /></p>
 </div>
+<p>Looking at just the 25-30 range we see we are consistently beating
+the .693 value. Below is table with each year color coded. Blue is the
+lowest an red is the highest (worst). As you can see the value of 27 is
+pretty consistent across the board so that is what we are going to
+use.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div id="fcqhqnuoft" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="upnzbpicny" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#fcqhqnuoft .gt_table {
+#upnzbpicny .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2234,7 +2240,7 @@ range of k values. It appears to be lowest in the 25-30 range.</p>
   border-left-color: #D3D3D3;
 }
 
-#fcqhqnuoft .gt_heading {
+#upnzbpicny .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2246,7 +2252,7 @@ range of k values. It appears to be lowest in the 25-30 range.</p>
   border-right-color: #D3D3D3;
 }
 
-#fcqhqnuoft .gt_title {
+#upnzbpicny .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2258,7 +2264,7 @@ range of k values. It appears to be lowest in the 25-30 range.</p>
   border-bottom-width: 0;
 }
 
-#fcqhqnuoft .gt_subtitle {
+#upnzbpicny .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2270,13 +2276,13 @@ range of k values. It appears to be lowest in the 25-30 range.</p>
   border-top-width: 0;
 }
 
-#fcqhqnuoft .gt_bottom_border {
+#upnzbpicny .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fcqhqnuoft .gt_col_headings {
+#upnzbpicny .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2291,7 +2297,7 @@ range of k values. It appears to be lowest in the 25-30 range.</p>
   border-right-color: #D3D3D3;
 }
 
-#fcqhqnuoft .gt_col_heading {
+#upnzbpicny .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2311,7 +2317,7 @@ range of k values. It appears to be lowest in the 25-30 range.</p>
   overflow-x: hidden;
 }
 
-#fcqhqnuoft .gt_column_spanner_outer {
+#upnzbpicny .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2323,15 +2329,15 @@ range of k values. It appears to be lowest in the 25-30 range.</p>
   padding-right: 4px;
 }
 
-#fcqhqnuoft .gt_column_spanner_outer:first-child {
+#upnzbpicny .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fcqhqnuoft .gt_column_spanner_outer:last-child {
+#upnzbpicny .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fcqhqnuoft .gt_column_spanner {
+#upnzbpicny .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2343,7 +2349,7 @@ range of k values. It appears to be lowest in the 25-30 range.</p>
   width: 100%;
 }
 
-#fcqhqnuoft .gt_group_heading {
+#upnzbpicny .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2368,7 +2374,7 @@ range of k values. It appears to be lowest in the 25-30 range.</p>
   vertical-align: middle;
 }
 
-#fcqhqnuoft .gt_empty_group_heading {
+#upnzbpicny .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2383,15 +2389,15 @@ range of k values. It appears to be lowest in the 25-30 range.</p>
   vertical-align: middle;
 }
 
-#fcqhqnuoft .gt_from_md > :first-child {
+#upnzbpicny .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fcqhqnuoft .gt_from_md > :last-child {
+#upnzbpicny .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fcqhqnuoft .gt_row {
+#upnzbpicny .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2410,7 +2416,7 @@ range of k values. It appears to be lowest in the 25-30 range.</p>
   overflow-x: hidden;
 }
 
-#fcqhqnuoft .gt_stub {
+#upnzbpicny .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2423,7 +2429,7 @@ range of k values. It appears to be lowest in the 25-30 range.</p>
   padding-right: 5px;
 }
 
-#fcqhqnuoft .gt_stub_row_group {
+#upnzbpicny .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2437,11 +2443,11 @@ range of k values. It appears to be lowest in the 25-30 range.</p>
   vertical-align: top;
 }
 
-#fcqhqnuoft .gt_row_group_first td {
+#upnzbpicny .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#fcqhqnuoft .gt_summary_row {
+#upnzbpicny .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2451,16 +2457,16 @@ range of k values. It appears to be lowest in the 25-30 range.</p>
   padding-right: 5px;
 }
 
-#fcqhqnuoft .gt_first_summary_row {
+#upnzbpicny .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#fcqhqnuoft .gt_first_summary_row.thick {
+#upnzbpicny .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#fcqhqnuoft .gt_last_summary_row {
+#upnzbpicny .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2470,7 +2476,7 @@ range of k values. It appears to be lowest in the 25-30 range.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#fcqhqnuoft .gt_grand_summary_row {
+#upnzbpicny .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2480,7 +2486,7 @@ range of k values. It appears to be lowest in the 25-30 range.</p>
   padding-right: 5px;
 }
 
-#fcqhqnuoft .gt_first_grand_summary_row {
+#upnzbpicny .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2490,11 +2496,11 @@ range of k values. It appears to be lowest in the 25-30 range.</p>
   border-top-color: #D3D3D3;
 }
 
-#fcqhqnuoft .gt_striped {
+#upnzbpicny .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fcqhqnuoft .gt_table_body {
+#upnzbpicny .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2503,7 +2509,7 @@ range of k values. It appears to be lowest in the 25-30 range.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#fcqhqnuoft .gt_footnotes {
+#upnzbpicny .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2517,7 +2523,7 @@ range of k values. It appears to be lowest in the 25-30 range.</p>
   border-right-color: #D3D3D3;
 }
 
-#fcqhqnuoft .gt_footnote {
+#upnzbpicny .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -2526,7 +2532,7 @@ range of k values. It appears to be lowest in the 25-30 range.</p>
   padding-right: 5px;
 }
 
-#fcqhqnuoft .gt_sourcenotes {
+#upnzbpicny .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2540,7 +2546,7 @@ range of k values. It appears to be lowest in the 25-30 range.</p>
   border-right-color: #D3D3D3;
 }
 
-#fcqhqnuoft .gt_sourcenote {
+#upnzbpicny .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2548,64 +2554,64 @@ range of k values. It appears to be lowest in the 25-30 range.</p>
   padding-right: 5px;
 }
 
-#fcqhqnuoft .gt_left {
+#upnzbpicny .gt_left {
   text-align: left;
 }
 
-#fcqhqnuoft .gt_center {
+#upnzbpicny .gt_center {
   text-align: center;
 }
 
-#fcqhqnuoft .gt_right {
+#upnzbpicny .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fcqhqnuoft .gt_font_normal {
+#upnzbpicny .gt_font_normal {
   font-weight: normal;
 }
 
-#fcqhqnuoft .gt_font_bold {
+#upnzbpicny .gt_font_bold {
   font-weight: bold;
 }
 
-#fcqhqnuoft .gt_font_italic {
+#upnzbpicny .gt_font_italic {
   font-style: italic;
 }
 
-#fcqhqnuoft .gt_super {
+#upnzbpicny .gt_super {
   font-size: 65%;
 }
 
-#fcqhqnuoft .gt_footnote_marks {
+#upnzbpicny .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#fcqhqnuoft .gt_asterisk {
+#upnzbpicny .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#fcqhqnuoft .gt_indent_1 {
+#upnzbpicny .gt_indent_1 {
   text-indent: 5px;
 }
 
-#fcqhqnuoft .gt_indent_2 {
+#upnzbpicny .gt_indent_2 {
   text-indent: 10px;
 }
 
-#fcqhqnuoft .gt_indent_3 {
+#upnzbpicny .gt_indent_3 {
   text-indent: 15px;
 }
 
-#fcqhqnuoft .gt_indent_4 {
+#upnzbpicny .gt_indent_4 {
   text-indent: 20px;
 }
 
-#fcqhqnuoft .gt_indent_5 {
+#upnzbpicny .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -2672,11 +2678,492 @@ range of k values. It appears to be lowest in the 25-30 range.</p>
 </div>
 </div>
 <h3 id="bucketed-results">Bucketed Results</h3>
-<p>Now that we know our predicitions are better than a coin flip the
-next thing is to confirm the results are roughly linear. If we say a
-team has a ten percent chance of winning they should win roughly 10% of
-those matchups. If each group wins as much as expected through the
-probability it tells us the model is calibrated accurately.</p>
+<p>Now that we have optimized k for log loss value, the next thing is to
+confirm the results are roughly linear. If we say a team has a ten
+percent chance of winning they should win roughly 10% of those matchups.
+If each group wins as much as expected through the probability it tells
+us the model is calibrated accurately. As you can see in the plot below
+the results overal show a very linear result. This means the model is
+calibrated well. The x-axis is the actual results, and the y-axis is the
+predicted result. For example it takes all games that gave a team a 75%
+chance of winning and calculated what percent of games we actually won
+by those teams. The top plot shows all results, and the bottom ones
+limits to predictions that have at least 50 games.The predicted result
+is a slightly low on average, so that is something we will have to
+evaluate in the future to see if can be improved.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="prediction_accuracy_k27_plot.png" width="972" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="prediction_accuracy_k27_sample_plot.png" width="972" /></p>
+</div>
+<h2 id="conclusion">Conclusion</h2>
+<p>I created my first pass at ranking NCAA men’s basketball team and
+predicting the results of games. The last thing we want to check is how
+the k values works over time. IT is pretty consistent over time, but in
+the more recent years it has been tredning up. We will have to evaluate
+ways to make it more accurate as the years pass.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div id="klrayjqpss" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#klrayjqpss .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#klrayjqpss .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#klrayjqpss .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#klrayjqpss .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#klrayjqpss .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#klrayjqpss .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#klrayjqpss .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#klrayjqpss .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#klrayjqpss .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#klrayjqpss .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#klrayjqpss .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#klrayjqpss .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#klrayjqpss .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#klrayjqpss .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#klrayjqpss .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#klrayjqpss .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#klrayjqpss .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#klrayjqpss .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#klrayjqpss .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#klrayjqpss .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#klrayjqpss .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#klrayjqpss .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#klrayjqpss .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#klrayjqpss .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#klrayjqpss .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#klrayjqpss .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#klrayjqpss .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#klrayjqpss .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#klrayjqpss .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#klrayjqpss .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#klrayjqpss .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#klrayjqpss .gt_left {
+  text-align: left;
+}
+
+#klrayjqpss .gt_center {
+  text-align: center;
+}
+
+#klrayjqpss .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#klrayjqpss .gt_font_normal {
+  font-weight: normal;
+}
+
+#klrayjqpss .gt_font_bold {
+  font-weight: bold;
+}
+
+#klrayjqpss .gt_font_italic {
+  font-style: italic;
+}
+
+#klrayjqpss .gt_super {
+  font-size: 65%;
+}
+
+#klrayjqpss .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#klrayjqpss .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#klrayjqpss .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#klrayjqpss .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#klrayjqpss .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#klrayjqpss .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#klrayjqpss .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">year</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">logloss</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">n</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_right">2009</td>
+<td class="gt_row gt_right" style="background-color: #D4D4FF; color: #000000;">0.5365246</td>
+<td class="gt_row gt_right">5329</td></tr>
+    <tr><td class="gt_row gt_right">2010</td>
+<td class="gt_row gt_right" style="background-color: #3718D6; color: #FFFFFF;">0.5202098</td>
+<td class="gt_row gt_right">5386</td></tr>
+    <tr><td class="gt_row gt_right">2011</td>
+<td class="gt_row gt_right" style="background-color: #7364F3; color: #000000;">0.5248948</td>
+<td class="gt_row gt_right">5380</td></tr>
+    <tr><td class="gt_row gt_right">2012</td>
+<td class="gt_row gt_right" style="background-color: #4500AD; color: #FFFFFF;">0.5151765</td>
+<td class="gt_row gt_right">5398</td></tr>
+    <tr><td class="gt_row gt_right">2013</td>
+<td class="gt_row gt_right" style="background-color: #B0AAFF; color: #000000;">0.5308178</td>
+<td class="gt_row gt_right">5461</td></tr>
+    <tr><td class="gt_row gt_right">2014</td>
+<td class="gt_row gt_right" style="background-color: #C2BCFF; color: #000000;">0.5321253</td>
+<td class="gt_row gt_right">5503</td></tr>
+    <tr><td class="gt_row gt_right">2015</td>
+<td class="gt_row gt_right" style="background-color: #D3D1FF; color: #000000;">0.5360746</td>
+<td class="gt_row gt_right">5499</td></tr>
+    <tr><td class="gt_row gt_right">2016</td>
+<td class="gt_row gt_right" style="background-color: #C8C2FF; color: #000000;">0.5327400</td>
+<td class="gt_row gt_right">5516</td></tr>
+    <tr><td class="gt_row gt_right">2017</td>
+<td class="gt_row gt_right" style="background-color: #D2D0FF; color: #000000;">0.5358456</td>
+<td class="gt_row gt_right">5535</td></tr>
+    <tr><td class="gt_row gt_right">2018</td>
+<td class="gt_row gt_right" style="background-color: #DAD3FC; color: #000000;">0.5372588</td>
+<td class="gt_row gt_right">5540</td></tr>
+    <tr><td class="gt_row gt_right">2019</td>
+<td class="gt_row gt_right" style="background-color: #F8C4EA; color: #000000;">0.5403420</td>
+<td class="gt_row gt_right">5603</td></tr>
+    <tr><td class="gt_row gt_right">2020</td>
+<td class="gt_row gt_right" style="background-color: #FF949B; color: #000000;">0.5446213</td>
+<td class="gt_row gt_right">5328</td></tr>
+    <tr><td class="gt_row gt_right">2021</td>
+<td class="gt_row gt_right" style="background-color: #D60C00; color: #FFFFFF;">0.5628406</td>
+<td class="gt_row gt_right">3944</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+</div>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
