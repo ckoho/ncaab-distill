@@ -2113,9 +2113,6 @@ Basketball.</p></p>
 <ul>
 <li><a href="#example-calculation">Example Calculation</a></li>
 <li><a href="#preseason-ratings">Preseason Ratings</a></li>
-</ul></li>
-<li><a href="#checking-the-accuracy">Checking the Accuracy</a>
-<ul>
 <li><a href="#log-loss">Log Loss</a></li>
 <li><a href="#bucketed-results">Bucketed Results</a></li>
 </ul></li>
@@ -2157,11 +2154,10 @@ team a. K is a constant that scales the adjustment. The larger K is the
 more dependent the rankings are on the most recent results, and thus
 would be more elastic. The goal is to chose a k that reflects team’s
 skill throughout the year, but does not cause wild swing in a team’s
-ranking. I am going to use a k set to be 27. <span
-class="math inline">\(O_a\)</span> is the outcome for team a. Since
-basketball only has loss and wins, a win is 1 and a loss is 0. <span
-class="math inline">\(P_a\)</span> is the probability of winning and
-that equation is shown earlier in this example.</p>
+ranking. <span class="math inline">\(O_a\)</span> is the outcome for
+team a. Since basketball only has loss and wins, a win is 1 and a loss
+is 0. <span class="math inline">\(P_a\)</span> is the probability of
+winning and that equation is shown earlier in this example.</p>
 <h3 id="example-calculation">Example Calculation</h3>
 <p>Here I will run through an example to explain how the works. Say
 Montana (team A, rating: 1500) is playing Montana State (team B, rating:
@@ -2180,18 +2176,17 @@ other direction for each team. There is a little more to the adjustment
 to make it more accurate, but that is covered in a later post.</p>
 <h3 id="preseason-ratings">Preseason Ratings</h3>
 <p>To start the beginning of each year we have to adjust the end of
-season ratings. Because we are not adjusting the rating based individual
-players, we don’t factor in graduation, transfers, new recruits, or
-expected player development. For this simple system we just use the last
-two year’s ranking and a little regression to the mean. The current
+season ratings. Because we are not factoring individual players into the
+team’s rating, we don’t factor in graduation, transfers, new recruits,
+or expected player development. For this simple system we just use the
+last two year’s ranking and a little regression to the mean. The current
 adjustment is taking 50% for the end of year ranking, 30% their previous
-year ranking, and 20% 1500 (which is the mean).</p>
-<h2 id="checking-the-accuracy">Checking the Accuracy</h2>
-<p>I am using two measures to check the accuracy of my predictions and
-help choose the best k value. Those are log loss calculation and by
-bucketing the results by expected outcome.</p>
+year ranking, and 20% the mean (1500). ## Checking the Accuracy I am
+using two measures to check the accuracy of my predictions and help
+choose the best k value. Those are log loss calculation and by bucketing
+the results by expected outcome.</p>
 <h3 id="log-loss">Log Loss</h3>
-<p>Log loss is a calcuation that compares expected result to actual
+<p>Log loss is a calculation that compares expected result to actual
 result. It penalizes overconfidence. Without going into the gory details
 (more can be found <a
 href="https://www.analyticsvidhya.com/blog/2020/11/binary-cross-entropy-aka-log-loss-the-cost-function-used-in-logistic-regression/">here</a>
@@ -2210,12 +2205,12 @@ lowest an red is the highest (worst). As you can see the value of 27 is
 pretty consistent across the board so that is what we are going to
 use.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div id="upnzbpicny" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="epwhqakqdh" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#upnzbpicny .gt_table {
+#epwhqakqdh .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2240,7 +2235,7 @@ use.</p>
   border-left-color: #D3D3D3;
 }
 
-#upnzbpicny .gt_heading {
+#epwhqakqdh .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2252,7 +2247,7 @@ use.</p>
   border-right-color: #D3D3D3;
 }
 
-#upnzbpicny .gt_title {
+#epwhqakqdh .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2264,7 +2259,7 @@ use.</p>
   border-bottom-width: 0;
 }
 
-#upnzbpicny .gt_subtitle {
+#epwhqakqdh .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2276,13 +2271,13 @@ use.</p>
   border-top-width: 0;
 }
 
-#upnzbpicny .gt_bottom_border {
+#epwhqakqdh .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#upnzbpicny .gt_col_headings {
+#epwhqakqdh .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2297,7 +2292,7 @@ use.</p>
   border-right-color: #D3D3D3;
 }
 
-#upnzbpicny .gt_col_heading {
+#epwhqakqdh .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2317,7 +2312,7 @@ use.</p>
   overflow-x: hidden;
 }
 
-#upnzbpicny .gt_column_spanner_outer {
+#epwhqakqdh .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2329,15 +2324,15 @@ use.</p>
   padding-right: 4px;
 }
 
-#upnzbpicny .gt_column_spanner_outer:first-child {
+#epwhqakqdh .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#upnzbpicny .gt_column_spanner_outer:last-child {
+#epwhqakqdh .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#upnzbpicny .gt_column_spanner {
+#epwhqakqdh .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2349,7 +2344,7 @@ use.</p>
   width: 100%;
 }
 
-#upnzbpicny .gt_group_heading {
+#epwhqakqdh .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2374,7 +2369,7 @@ use.</p>
   vertical-align: middle;
 }
 
-#upnzbpicny .gt_empty_group_heading {
+#epwhqakqdh .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2389,15 +2384,15 @@ use.</p>
   vertical-align: middle;
 }
 
-#upnzbpicny .gt_from_md > :first-child {
+#epwhqakqdh .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#upnzbpicny .gt_from_md > :last-child {
+#epwhqakqdh .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#upnzbpicny .gt_row {
+#epwhqakqdh .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2416,7 +2411,7 @@ use.</p>
   overflow-x: hidden;
 }
 
-#upnzbpicny .gt_stub {
+#epwhqakqdh .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2429,7 +2424,7 @@ use.</p>
   padding-right: 5px;
 }
 
-#upnzbpicny .gt_stub_row_group {
+#epwhqakqdh .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2443,11 +2438,11 @@ use.</p>
   vertical-align: top;
 }
 
-#upnzbpicny .gt_row_group_first td {
+#epwhqakqdh .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#upnzbpicny .gt_summary_row {
+#epwhqakqdh .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2457,16 +2452,16 @@ use.</p>
   padding-right: 5px;
 }
 
-#upnzbpicny .gt_first_summary_row {
+#epwhqakqdh .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#upnzbpicny .gt_first_summary_row.thick {
+#epwhqakqdh .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#upnzbpicny .gt_last_summary_row {
+#epwhqakqdh .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2476,7 +2471,7 @@ use.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#upnzbpicny .gt_grand_summary_row {
+#epwhqakqdh .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2486,7 +2481,7 @@ use.</p>
   padding-right: 5px;
 }
 
-#upnzbpicny .gt_first_grand_summary_row {
+#epwhqakqdh .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2496,11 +2491,11 @@ use.</p>
   border-top-color: #D3D3D3;
 }
 
-#upnzbpicny .gt_striped {
+#epwhqakqdh .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#upnzbpicny .gt_table_body {
+#epwhqakqdh .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2509,7 +2504,7 @@ use.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#upnzbpicny .gt_footnotes {
+#epwhqakqdh .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2523,7 +2518,7 @@ use.</p>
   border-right-color: #D3D3D3;
 }
 
-#upnzbpicny .gt_footnote {
+#epwhqakqdh .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -2532,7 +2527,7 @@ use.</p>
   padding-right: 5px;
 }
 
-#upnzbpicny .gt_sourcenotes {
+#epwhqakqdh .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2546,7 +2541,7 @@ use.</p>
   border-right-color: #D3D3D3;
 }
 
-#upnzbpicny .gt_sourcenote {
+#epwhqakqdh .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2554,64 +2549,64 @@ use.</p>
   padding-right: 5px;
 }
 
-#upnzbpicny .gt_left {
+#epwhqakqdh .gt_left {
   text-align: left;
 }
 
-#upnzbpicny .gt_center {
+#epwhqakqdh .gt_center {
   text-align: center;
 }
 
-#upnzbpicny .gt_right {
+#epwhqakqdh .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#upnzbpicny .gt_font_normal {
+#epwhqakqdh .gt_font_normal {
   font-weight: normal;
 }
 
-#upnzbpicny .gt_font_bold {
+#epwhqakqdh .gt_font_bold {
   font-weight: bold;
 }
 
-#upnzbpicny .gt_font_italic {
+#epwhqakqdh .gt_font_italic {
   font-style: italic;
 }
 
-#upnzbpicny .gt_super {
+#epwhqakqdh .gt_super {
   font-size: 65%;
 }
 
-#upnzbpicny .gt_footnote_marks {
+#epwhqakqdh .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#upnzbpicny .gt_asterisk {
+#epwhqakqdh .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#upnzbpicny .gt_indent_1 {
+#epwhqakqdh .gt_indent_1 {
   text-indent: 5px;
 }
 
-#upnzbpicny .gt_indent_2 {
+#epwhqakqdh .gt_indent_2 {
   text-indent: 10px;
 }
 
-#upnzbpicny .gt_indent_3 {
+#epwhqakqdh .gt_indent_3 {
   text-indent: 15px;
 }
 
-#upnzbpicny .gt_indent_4 {
+#epwhqakqdh .gt_indent_4 {
   text-indent: 20px;
 }
 
-#upnzbpicny .gt_indent_5 {
+#epwhqakqdh .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -2700,16 +2695,16 @@ evaluate in the future to see if can be improved.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>I created my first pass at ranking NCAA men’s basketball team and
 predicting the results of games. The last thing we want to check is how
-the k values works over time. IT is pretty consistent over time, but in
-the more recent years it has been tredning up. We will have to evaluate
+the k values works over time. It is pretty consistent over time, but in
+the more recent years it has been trending up. We will have to evaluate
 ways to make it more accurate as the years pass.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div id="klrayjqpss" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="uhqirwfzsd" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#klrayjqpss .gt_table {
+#uhqirwfzsd .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2734,7 +2729,7 @@ ways to make it more accurate as the years pass.</p>
   border-left-color: #D3D3D3;
 }
 
-#klrayjqpss .gt_heading {
+#uhqirwfzsd .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2746,7 +2741,7 @@ ways to make it more accurate as the years pass.</p>
   border-right-color: #D3D3D3;
 }
 
-#klrayjqpss .gt_title {
+#uhqirwfzsd .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2758,7 +2753,7 @@ ways to make it more accurate as the years pass.</p>
   border-bottom-width: 0;
 }
 
-#klrayjqpss .gt_subtitle {
+#uhqirwfzsd .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2770,13 +2765,13 @@ ways to make it more accurate as the years pass.</p>
   border-top-width: 0;
 }
 
-#klrayjqpss .gt_bottom_border {
+#uhqirwfzsd .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#klrayjqpss .gt_col_headings {
+#uhqirwfzsd .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2791,7 +2786,7 @@ ways to make it more accurate as the years pass.</p>
   border-right-color: #D3D3D3;
 }
 
-#klrayjqpss .gt_col_heading {
+#uhqirwfzsd .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2811,7 +2806,7 @@ ways to make it more accurate as the years pass.</p>
   overflow-x: hidden;
 }
 
-#klrayjqpss .gt_column_spanner_outer {
+#uhqirwfzsd .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2823,15 +2818,15 @@ ways to make it more accurate as the years pass.</p>
   padding-right: 4px;
 }
 
-#klrayjqpss .gt_column_spanner_outer:first-child {
+#uhqirwfzsd .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#klrayjqpss .gt_column_spanner_outer:last-child {
+#uhqirwfzsd .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#klrayjqpss .gt_column_spanner {
+#uhqirwfzsd .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2843,7 +2838,7 @@ ways to make it more accurate as the years pass.</p>
   width: 100%;
 }
 
-#klrayjqpss .gt_group_heading {
+#uhqirwfzsd .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2868,7 +2863,7 @@ ways to make it more accurate as the years pass.</p>
   vertical-align: middle;
 }
 
-#klrayjqpss .gt_empty_group_heading {
+#uhqirwfzsd .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2883,15 +2878,15 @@ ways to make it more accurate as the years pass.</p>
   vertical-align: middle;
 }
 
-#klrayjqpss .gt_from_md > :first-child {
+#uhqirwfzsd .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#klrayjqpss .gt_from_md > :last-child {
+#uhqirwfzsd .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#klrayjqpss .gt_row {
+#uhqirwfzsd .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2910,7 +2905,7 @@ ways to make it more accurate as the years pass.</p>
   overflow-x: hidden;
 }
 
-#klrayjqpss .gt_stub {
+#uhqirwfzsd .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2923,7 +2918,7 @@ ways to make it more accurate as the years pass.</p>
   padding-right: 5px;
 }
 
-#klrayjqpss .gt_stub_row_group {
+#uhqirwfzsd .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2937,11 +2932,11 @@ ways to make it more accurate as the years pass.</p>
   vertical-align: top;
 }
 
-#klrayjqpss .gt_row_group_first td {
+#uhqirwfzsd .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#klrayjqpss .gt_summary_row {
+#uhqirwfzsd .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2951,16 +2946,16 @@ ways to make it more accurate as the years pass.</p>
   padding-right: 5px;
 }
 
-#klrayjqpss .gt_first_summary_row {
+#uhqirwfzsd .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#klrayjqpss .gt_first_summary_row.thick {
+#uhqirwfzsd .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#klrayjqpss .gt_last_summary_row {
+#uhqirwfzsd .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2970,7 +2965,7 @@ ways to make it more accurate as the years pass.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#klrayjqpss .gt_grand_summary_row {
+#uhqirwfzsd .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2980,7 +2975,7 @@ ways to make it more accurate as the years pass.</p>
   padding-right: 5px;
 }
 
-#klrayjqpss .gt_first_grand_summary_row {
+#uhqirwfzsd .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2990,11 +2985,11 @@ ways to make it more accurate as the years pass.</p>
   border-top-color: #D3D3D3;
 }
 
-#klrayjqpss .gt_striped {
+#uhqirwfzsd .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#klrayjqpss .gt_table_body {
+#uhqirwfzsd .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3003,7 +2998,7 @@ ways to make it more accurate as the years pass.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#klrayjqpss .gt_footnotes {
+#uhqirwfzsd .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3017,7 +3012,7 @@ ways to make it more accurate as the years pass.</p>
   border-right-color: #D3D3D3;
 }
 
-#klrayjqpss .gt_footnote {
+#uhqirwfzsd .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -3026,7 +3021,7 @@ ways to make it more accurate as the years pass.</p>
   padding-right: 5px;
 }
 
-#klrayjqpss .gt_sourcenotes {
+#uhqirwfzsd .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3040,7 +3035,7 @@ ways to make it more accurate as the years pass.</p>
   border-right-color: #D3D3D3;
 }
 
-#klrayjqpss .gt_sourcenote {
+#uhqirwfzsd .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3048,64 +3043,64 @@ ways to make it more accurate as the years pass.</p>
   padding-right: 5px;
 }
 
-#klrayjqpss .gt_left {
+#uhqirwfzsd .gt_left {
   text-align: left;
 }
 
-#klrayjqpss .gt_center {
+#uhqirwfzsd .gt_center {
   text-align: center;
 }
 
-#klrayjqpss .gt_right {
+#uhqirwfzsd .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#klrayjqpss .gt_font_normal {
+#uhqirwfzsd .gt_font_normal {
   font-weight: normal;
 }
 
-#klrayjqpss .gt_font_bold {
+#uhqirwfzsd .gt_font_bold {
   font-weight: bold;
 }
 
-#klrayjqpss .gt_font_italic {
+#uhqirwfzsd .gt_font_italic {
   font-style: italic;
 }
 
-#klrayjqpss .gt_super {
+#uhqirwfzsd .gt_super {
   font-size: 65%;
 }
 
-#klrayjqpss .gt_footnote_marks {
+#uhqirwfzsd .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#klrayjqpss .gt_asterisk {
+#uhqirwfzsd .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#klrayjqpss .gt_indent_1 {
+#uhqirwfzsd .gt_indent_1 {
   text-indent: 5px;
 }
 
-#klrayjqpss .gt_indent_2 {
+#uhqirwfzsd .gt_indent_2 {
   text-indent: 10px;
 }
 
-#klrayjqpss .gt_indent_3 {
+#uhqirwfzsd .gt_indent_3 {
   text-indent: 15px;
 }
 
-#klrayjqpss .gt_indent_4 {
+#uhqirwfzsd .gt_indent_4 {
   text-indent: 20px;
 }
 
-#klrayjqpss .gt_indent_5 {
+#uhqirwfzsd .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
