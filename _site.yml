@@ -3,6 +3,7 @@ title: "NCAA Basketball Blog"
 description: |
   NCAA Basketball Blog
 output_dir: "_site"
+google_analytics: "G-06676QXCTY"
 navbar:
   right:
     - text: "Home"

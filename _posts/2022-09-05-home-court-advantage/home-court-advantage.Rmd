@@ -1,0 +1,73 @@
+---
+title: "Home Court Advantage"
+description: |
+  Looking into home court impact in basketball.
+author: Colin Kohoutek
+date: 2022-04-10
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+    toc_depth: 3
+
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+# Introduction
+Across all sports, the home team tends to win at a higher clip when adjusting for team quality. To properly calibrate our ratings, this must be factored in. We are going to look at a few different ways to calculate the effect playing at home creates.
+
+# Ways To Analyze Home Court Advantage
+We will use three different methods to analyze home court advantage. We will discuss the pros and cons of each method to help determine how much playing at home helps.
+
+## All Home Games
+The simplest method is to calculate the winning percentage of games not played at a neutral site. The table below shows the home court win percentage is around 64-66% for all but the most recent two years. 
+
+```{r, eval = TRUE}
+library(tidyverse)
+library(vroom)
+library(fs)
+library(gt)
+library(gtExtras)
+
+df <- vroom("homecourt_season_winper.csv")
+df %>%
+  gt() %>%
+  tab_header(
+    title = "Home Win Percentage By Year")
+```
+We could use this as our baseline home court, but I believe this overstates the home court advantage. The reason is each team gets to pick its non-conference schedule each year which can lead to unbalanced results. Good programs will schedule weaker opponents at home to make money and get easy wins. In the professional ranks where the schedule is created to be balanced, just looking at home results would be closer to accurate than in college. Sure enough, if we look at the win percentage by month we see in November and December when non-conference games are played, the win percentage is much higher than in January or February. 
+
+```{r layout="l-body"}
+knitr::include_graphics("homecourt_month_winper.png")
+```
+
+## Conference Results
+The second way is to analyze just conference games. The benefit of this method is the conferences set the schedules to be more balanced. A lot of conferences also have teams playing at each team's home. Also, for the most part, the teams in the conference have similar skill levels to where home court advantage matters more in who wins.
+
+```{r, eval = TRUE}
+df <- vroom("conference_season_winper.csv")
+df %>%
+  gt() %>%
+  tab_header(
+    title = "Conference Home Win Percentage By Year")
+```
+These numbers are lower than looking at all home games as expected. We also see a slight downward trend followed big drop during the 2021 season. Early on, home teams win around 62% of games, the win percentage drops to approximately 60%, and then 58% in the two most recent seasons. 
+
+## Home and Away Results
+The last way to analyze this is to look at teams that played home and home games and see what the overall win percentage is. They are most commonly conference games so I expect similar results as above. 
+
+
+# Home Court Stability
+It is important to determine how quickly home court advantage stabilizes for each season. This is because if home court advantage changes in the early (2021 due to reduced crowds) we need to pick up on it quickly during the season to adjust our predictions and ratings adjustments for that season. It is easy to know the home court advantage when the season completes, but that does not provide any help for in season projections.  
+
+# Future Steps
+
+The above two options is just a broad way to analyze home court. It gets you most of the way there without taking further steps to get the last 10% or so correct. The There are more ways to take home court calculations to the next level. There are a few other factors that could impact home court.
+
+1. Distance traveled by the road team. The further traveled the more jet lag and other impacts you could see. My assumption is east to west travel is harder than north to south, but will need to confirm.
+2. Days spent on the road. Most road trips consist of two games so perhaps being on the second game and away from your bed longer could have an impact.
+3. Time of the game. A west coast team playing on the east coast in the afternoon could be earlier than they are used to playing. Similarly an east coast team playing on the west coast at night might be tired and not at peak performance levels. 
+4. Arena specific impacts. A louder crowd might also have an impact. Also if it is a large gym it can impact the visual oft he opposing team and cause them to shoot worse. 
+
+# Conclusions

@@ -19,7 +19,7 @@ distill::create_post(
   draft = TRUE, 
   edit = interactive()
 )
-rename_post_dir("_posts/2016-11-08-sharpe-ratio") 
+rename_post_dir("_posts/2022-09-05-home-court-advantage", date_prefix = "9/05/2022") 
 
 
 
@@ -189,3 +189,111 @@ df_summary_year %>%
   gt_color_rows(avg_logloss,palette = "ggsci::default_gsea")
 
 
+
+
+####Home-Court-Advantage
+library(tidyverse)
+library(vroom)
+library(fs)
+library(gt)
+library(gtExtras)
+
+#Calculating each year win percentage
+files <- fs::dir_ls(path = "../../Inputs/NCAA/", 
+                    regexp = "torvik_box_score.*.csv")
+df_torvik <- vroom(files) %>%
+  filter(loc == "A")
+df_torvik <- df_torvik %>%
+  mutate(result = if_else(team2 == win, 1, 0),
+         month = lubridate::month(df_torvik$date))
+df_season_winper <- df_torvik %>%
+  group_by(season) %>%
+  summarize(win = round(mean(result),3)) %>%
+  pivot_wider(names_from=season, values_from=win)
+df_month_winper <- df_torvik %>%
+  group_by(season, month) %>%
+  summarize(win = mean(result),
+            n = n()) %>%
+  filter(n > 10)
+
+ggplot(df_month_winper, aes(x = season, y = win)) + 
+  geom_point(aes(color = month, size = n)) 
+ggsave("_posts/2022-04-10-home-court-advantage/homecourt_month_winper.png")
+df_season_winper %>%
+  gt() %>%
+  tab_header(
+    title = "Home Win Percentage By Year")
+df_month_winper <- vroom("_posts/2022-04-10-home-court-advantage/homecourt_month_winper.csv") %>%
+  mutate(month = factor(month, 
+                        levels = c("November", "December", "January", 
+                                   "February", "March")))
+write_csv(df_season_winper, 
+          "_posts/2022-04-10-home-court-advantage/homecourt_season_winper.csv")
+
+write_csv(df_month_winper, 
+          "_posts/2022-04-10-home-court-advantage/homecourt_month_winper.csv")
+
+
+#Conference Games
+
+files <- fs::dir_ls(path = "../../Inputs/NCAA/", 
+                    regexp = "torvik_box_score.*.csv")
+df_torvik <- vroom(files) 
+df <- df_torvik %>%
+  filter(team1_conf == team2_conf,
+         loc == "A")
+df <- df %>%
+  mutate(result = if_else(team2 == win, 1, 0),
+         month = lubridate::month(df$date))
+
+
+df_season_winper <- df %>%
+  group_by(season) %>%
+  summarize(win = round(mean(result),3)) %>%
+  pivot_wider(names_from=season, values_from=win)
+df_month_winper <- df %>%
+  group_by(season, month) %>%
+  summarize(win = mean(result),
+            n = n()) %>%
+  filter(n > 10)
+
+df_month_winper <- df_month_winper %>%
+  mutate(month = factor(month, 
+                        levels = c("11", "12", "1", "2", "3")))
+ggplot(df_month_winper, aes(x = season, y = win)) + 
+  geom_point(aes(color = month, size = n)) 
+df_conf_winper %>%
+  gt() %>%
+  tab_header(
+    title = "Conference Home Win Percentage By Year")
+write_csv(df_season_winper, 
+          "_posts/2022-04-10-home-court-advantage/conference_season_winper.csv")
+
+
+df_season_winper <- df %>%
+  group_by(season) %>%
+  summarize(win = round(mean(result),3))
+ggplot(df_season_winper, aes(x = season, y = win)) + 
+  geom_point()
+
+
+#Home and Away
+files <- fs::dir_ls(path = "../../Inputs/NCAA/", 
+                    regexp = "torvik_box_score.*.csv")
+df_torvik <- vroom(files) 
+df <- df_torvik %>%
+  filter(loc == "A")
+df <- df %>%
+  mutate(result = if_else(team2 == win, 1, 0),
+         month = lubridate::month(df$date)) %>%
+  select(team1, team2, date, month, result, season)
+df1 <- df %>%
+  mutate(month = factor(month, 
+                        levels = c("11", "12", "1", 
+                                   "2", "3")))
+df_repeat <- df %>%
+  inner_join(df, by = c("team1" = "team2", "team2" = "team1", 
+                        "season" = "season"))
+df_season_winper <- df_repeat %>%
+  group_by(season) %>%
+  summarize(win = round(mean(result.x),3))
