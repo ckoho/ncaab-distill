@@ -296,4 +296,60 @@ df_repeat <- df %>%
                         "season" = "season"))
 df_season_winper <- df_repeat %>%
   group_by(season) %>%
-  summarize(win = round(mean(result.x),3))
+  summarize(win = round(mean(result.x),3)) %>%
+  pivot_wider(names_from=season, values_from=win)
+write_csv(df_season_winper, 
+          "_posts/2022-09-05-home-court-advantage/repeat_season_winper.csv")
+df_season_winper %>%
+  gt() %>%
+  tab_header(
+    title = "Home Win Percentage By Year")
+
+files <- fs::dir_ls(path = "_posts/2022-09-05-home-court-advantage/", 
+                    regexp = "/[rc].*_season_winper.csv")
+df_combined <- vroom(files) 
+df_combined <- df_combined %>%
+  add_column(Method = c("Conference", "Repeat"))
+df_combined %>%
+  gt(rowname_col = "Method") %>%
+  tab_header(
+    title = "Home Win Percentage By Year")
+write_csv(df_combined, 
+          "_posts/2022-09-05-home-court-advantage/combined_season_winper.csv")
+
+
+
+
+###Home Court Stability
+library(tidyverse)
+library(vroom)
+library(fs)
+library(gt)
+library(gtExtras)
+files <- fs::dir_ls(path = "../../Inputs/NCAA/HCA/", 
+                    regexp = "results.*.csv")
+df <- vroom(files) 
+
+
+for (i in 2008:2022){
+  df <-
+}
+df_avg <- df %>%
+  filter(loc != "N") %>%
+  mutate(delta = team2_odds - result ) %>%
+  group_by(season) %>%
+  mutate(cum_avg = cummean(delta),
+         games = 1:n())
+df_avg1 <- df_avg %>%
+  filter(season == 2009 | season == 2010| season > 2018)
+ggplot(df_avg1, aes(x=games, y=cum_avg)) + 
+  geom_point(aes(color=as_factor(year))) + 
+  ylim(-.4,.1)
+
+
+df %>%
+  filter(loc != "N") %>%
+  mutate(delta = team2_odds - result ) %>%
+  group_by(season) %>%
+  summarise(cum_avg = mean(delta)) %>%
+  arrange(cum_avg)
