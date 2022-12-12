@@ -3,7 +3,7 @@ usethis::use_github()
 library(distill)
 distill::create_post("Home Court Advantage")
 distill::create_post(
-  "ELO Rating System",
+  "Improving On Our Elo Ratings",
   author = "Colin Kohoutek",
   slug = "auto", # generates a website slug (URL)
   date_prefix = TRUE, # adds date for sorting
@@ -331,9 +331,6 @@ files <- fs::dir_ls(path = "../../Inputs/NCAA/HCA/",
 df <- vroom(files) 
 
 
-for (i in 2008:2022){
-  df <-
-}
 df_avg <- df %>%
   filter(loc != "N") %>%
   mutate(delta = team2_odds - result ) %>%
@@ -353,3 +350,213 @@ df %>%
   group_by(season) %>%
   summarise(cum_avg = mean(delta)) %>%
   arrange(cum_avg)
+
+####################################
+####Improving our Ratings
+###################################
+
+library(tidyverse)
+library(vroom)
+library(fs)
+library(gt)
+library(gtExtras)
+
+
+# Home and home results.
+files <- fs::dir_ls(path = "../../Inputs/NCAA/", 
+                    regexp = "torvik_box_score.*.csv")
+df_torvik <- vroom(files) 
+df_torvik <- df_torvik %>%
+  filter(loc == "A")
+df_torvik <- df_torvik %>%
+  mutate(result = if_else(team2 == win, 1, 0)) %>%
+  select(team1, team2, result, season, team1_pts, team2_pts)
+df_repeat <- df_torvik %>%
+  inner_join(df_torvik, by = c("team1" = "team2", "team2" = "team1", 
+                               "season" = "season")) %>%
+  mutate(game1_diff = team2_pts.x - team1_pts.x,
+         game2_diff = team1_pts.y - team2_pts.y) 
+
+df_summary <- df_repeat %>%
+  group_by(game1_diff) %>%
+  summarise(game2_diff = mean(game2_diff),
+            n = n(),
+            result = mean(result.y)) %>%
+  filter(n > 100)
+#filter(n > 27)
+df_summary <- df_summary %>%
+  mutate(rating_delta = (400 * log ((1 - result)/ result))/log(10)/2)
+
+#Plot all with fit
+formula <- y ~ x
+ggplot(df_repeat, aes(x=game1_diff, y=game2_diff)) + 
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) + 
+  ggpmisc::stat_poly_eq(aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")), 
+                        label.x.npc = "right", label.y.npc = 0.15,
+                        formula = formula, parse = TRUE, size = 3)
+ggsave("margin_of_victory_all_fit.png")
+
+ggplot(df_summary, aes(x=game1_diff, y=game2_diff)) + 
+  #geom_point(aes(size=n)) +
+  geom_point() + 
+  scale_x_continuous(breaks= seq(-30,30, by=5), limits = c(-30,30)) + 
+  scale_y_continuous(breaks= seq(-10, 8, by=2), limits = c(-15,8)) + 
+  geom_hline(yintercept=0)
+ggsave("margin_of_victory_all_nosize.png")
+
+ggplot(df_summary, aes(x=game1_diff, y=result)) + 
+  geom_point(aes(size=n)) + geom_hline(yintercept=.5)
+ggsave("mov_win_per.png")
+
+
+formula <- y ~ x
+ggplot(df_summary, aes(x=rating_delta, y=game2_diff)) + 
+  geom_point(aes(size=n)) +
+  geom_smooth(method = "lm", se = FALSE) + 
+  ggpmisc::stat_poly_eq(aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")), 
+               label.x.npc = "right", label.y.npc = 0.15,
+               formula = formula, parse = TRUE, size = 3) +
+  geom_abline(aes(intercept = 0, slope = .0815))
+ggsave("mov_rating_delta.png")
+ggplot(df_summary, aes(x=rating_delta, y=game2_diff)) + 
+  geom_point(aes(size=n)) +
+  geom_abline(aes(intercept = 0, slope = .0815))
+
+
+
+
+#############################
+### Violin Plot           ###
+#############################
+df_ranking <- vroom("C:/Users/ckoho/Documents/Inputs/NCAA/mbb_elo_2021.csv", 
+                    altrep = FALSE)
+#Select just each end of year ranking.
+df_ranking <- df_ranking %>%
+  select(team,elo_2008, elo_2009, elo_2010, elo_2011, elo_2012, elo_2013, elo_2014, 
+         elo_2015, elo_2016, elo_2017, elo_2018, elo_2019, elo_2020, elo_2021) %>%
+  pivot_longer(!team, names_to = "year", values_to = "rating")
+
+#Violin plot of each year ratings.
+ggplot(df_ranking, aes(year, rating)) + geom_violin(adjust = .5) #+ geom_jitter()
+ggsave("violin_plot.png")
+
+
+
+
+########################################################################
+###Log Loss calculation. Comparing autocor, default, line, and aelo. ###
+########################################################################
+
+#autocor
+files <- fs::dir_ls(path = "../../Inputs/NCAA/auto_corr/", 
+                    regexp = "results_eoy.*.csv")
+df_autocor <- vroom(files, altrep = FALSE)
+df_autocor <- df_autocor %>%
+  mutate(eq1 = result * log(team2_odds),
+         eq2 = (1 - result) * log(1-team2_odds),
+         logloss = -(eq1 + eq2)
+  )
+df_ac_sum <- df_autocor %>%
+  group_by(season) %>%
+  summarize(ac = mean(logloss))
+
+#default
+files <- fs::dir_ls(path = "../../Inputs/NCAA/", 
+                    regexp = "results_eoy.*.csv")
+df <- vroom(files, altrep = FALSE)
+df <- df %>%
+  mutate(eq1 = result * log(team2_odds),
+         eq2 = (1 - result) * log(1-team2_odds),
+         logloss = -(eq1 + eq2)
+  )
+df_def_sum <- df %>%
+  group_by(season) %>%
+  summarize(normal = mean(logloss))
+
+#aelo
+files <- fs::dir_ls(path = "../../Inputs/NCAA/aelo/", 
+                    regexp = "results_eoy.*.csv")
+df <- vroom(files, altrep = FALSE)
+df <- df %>%
+  mutate(eq1 = result * log(team2_odds),
+         eq2 = (1 - result) * log(1-team2_odds),
+         logloss = -(eq1 + eq2)
+  )
+df_aelo_sum <- df %>%
+  group_by(season) %>%
+  summarize(aelo = mean(logloss))
+
+#line
+files <- fs::dir_ls(path = "../../Inputs/NCAA/line/", 
+                    regexp = "results_eoy.*.csv")
+df <- vroom(files, altrep = FALSE)
+df <- df %>%
+  mutate(eq1 = result * log(team2_odds),
+         eq2 = (1 - result) * log(1-team2_odds),
+         logloss = -(eq1 + eq2)
+  )
+df_line_sum <- df %>%
+  group_by(season) %>%
+  summarize(line = mean(logloss))
+
+df1 <- df_def_sum %>%
+  left_join(df_ac_sum) %>%
+  #left_join(df_aelo_sum) %>%
+  left_join(df_line_sum) %>%
+  filter(season > 2008 ) %>%
+  filter(season < 2017)
+write_csv(df1, 
+          "_posts/2022-11-12-improving-on-our-elo-ratings/methods_logloss.csv")
+ggplot(df1, aes(x=season, y=logloss)) + geom_point(aes(color = group))
+
+
+df <- read_csv("_posts/2022-11-12-improving-on-our-elo-ratings/methods_logloss.csv")
+df_pivot <- data %>%
+  pivot_longer(!season, names_to = "group", values_to = "logloss")
+ggplot(df_pivot, aes(x=season, y=logloss)) + geom_point(aes(color = group)) + 
+  labs(title = "Logloss Calculation", 
+       subtitle = "The line based elo is significantly higher (worse) than the default and autocorrelation methods",
+       x = "Season",
+       y = "Log Loss",
+       caption = "Colin Kohoutek, data from @sportsdataverse"
+  ) + theme_bw() + theme(plot.caption = element_text(face = "italic",
+                                                     size = 4,
+                                                     color = "grey"),
+                         plot.tag = element_text(face = "bold"),
+                         plot.subtitle = element_text(size = 4))
+ggsave("_posts/2022-11-12-improving-on-our-elo-ratings/logloss_options.png")
+
+df_pivot <- data %>%
+  pivot_longer(!season, names_to = "group", values_to = "logloss") %>%
+  filter(group != "line")
+ggplot(df_pivot, aes(x=season, y=logloss)) + geom_point(aes(color = group)) + 
+  labs(title = "Logloss, Line Rating Removed", 
+       subtitle = "Autcorrelation is slightly worse than the normal rating system.",
+       x = "Season",
+       y = "Log Loss",
+       caption = "Colin Kohoutek, data from @sportsdataverse"
+  ) + theme_bw() + theme(plot.caption = element_text(face = "italic",
+                                                     size = 4,
+                                                     color = "grey"),
+                         plot.tag = element_text(face = "bold"),
+                         plot.subtitle = element_text(size = 4))
+
+
+ggsave("_posts/2022-11-12-improving-on-our-elo-ratings/logloss_options_noline.png")
+
+######################################
+# ggplot theme development
+#######################################
+ggplot(df1, aes(x=season, y=line)) + geom_point() + 
+  labs(title = "Title Here", 
+       subtitle = "Explain what the graph is showing",
+       x = "X Label",
+       y = "Y Label",
+       caption = "Colin Kohoutek, data from @sportsdataverse"
+  ) + theme_bw() + theme(plot.caption = element_text(face = "italic",
+                                                     size = 8,
+                                                     color = "grey"),
+                         plot.tag = element_text(face = "bold"),
+                         plot.subtitle = element_text(size = 8))
+  
