@@ -1,7 +1,7 @@
 ---
 title: "Improving On Our Elo Ratings"
 description: |
-  A short description of the post.
+  Evaluating different methods to improve ELO rankings.
 author: Colin Kohoutek
 date: 2022-11-12
 output:
