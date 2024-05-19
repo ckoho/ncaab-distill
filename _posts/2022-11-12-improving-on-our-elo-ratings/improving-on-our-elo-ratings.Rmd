@@ -60,5 +60,5 @@ knitr::include_graphics("logloss_options.png")
 knitr::include_graphics("logloss_options_noline.png")
 ```
 
-The current normal ratings have the lowest logloss and thus are the most accurate predictor year over year. It is interesting that the line-based one is significantly worse. I expected it to be comparable or slightly better. This tells me that winning a game is potentially more important to team quality than solely comparing to the expected game result. I believe performance compared to expectation matters, so I am going to evaluate one more method next time that merges elo and the line-based methods. 
+The current normal ratings have the lowest logloss and thus are the most accurate predictor year over year. It is interesting that the line-based one is significantly worse. I expected it to be comparable or slightly better. This tells me that winning a game is potentially more important to team quality than solely comparing to the expected game result. I believe performance compared to expectation matters, so I am going to evaluate one more method next time that merges elo and the line-based method. 
 

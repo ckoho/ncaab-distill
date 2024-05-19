@@ -1,5 +1,22 @@
 [
   {
+    "path": "posts/2024-01-15-adjusted-elo-rankings/",
+    "title": "Adjusted Elo Rankings",
+    "description": "Updating ranking based on performance versus expecations",
+    "author": [
+      {
+        "name": "Colin Kohoutek",
+        "url": {}
+      }
+    ],
+    "date": "2024-01-15",
+    "categories": [],
+    "contents": "\r\nIntroduction\r\nWe previously looked at a few different ways to make our elo rankings more accurate with minor tweaks. Adjusting the rating up or down based on the result compared to the line was less accurate than just basing it off of winning and margin of victory. This says there is something predictive to winning games compared to performance versus expectation (beating the expected line, but losing). This post is going to evaluate an adjusted elo ranking that still goes up and done based on winning and losing, but adds in a multiplier based on performance verses the expected wine. For example, if you win, but by less than expected your ranking will increase, but by not as much as the normal method. For a post on the elo ranking see here.\r\nAs an example, say two teams are playing on a neutral court with a rating delta of 100 points. This implies the higher ranked team will win about 64% of the time. Their expected margin of victory is 8.15 points. In this example we are going to use .25 as a multiplier. There are three cases to consider. These options are higher ranked team wins by more than 8, the higher ranked team wins by less than 8, and the lower ranked team outright wins. In the examples below we will say they won by 10, won by 6, and lost by 4. A reminder for all of these, ELO rankings adjustments are the same for both teams, just one is positive and the other is negative.\r\nCase 1: The higher ranked team wins by more than eight the adjustment will be higher than the normal value because they covered the spread based on the teams talent.\r\n\\[Adjustment_{case1} = (1+.25) * log(10) * 25 * (1-.64)\\approx 25.9\\]\r\nCase 2: The higher ranked team won, but not by the spread. Thus their ranking will go up, but by a smaller amount.\r\n\\[Adjustment_{case2}  = (1-.25) * log(6) * 25 * (1-.64)\\approx 12.1\\]\r\nCase 3: The lower ranked team won and so their ranking will go up and by a larger amount because they covered the spread as they were expected to lose.\r\n\\[Adjustment_{case3} = (1+.25) * log(4) * 25 * (1-.32)\\approx 29.46\\]\r\nAs cases 1 and 2 shows their is a large impact on the adjustment based on covering the spread. We need to perform a similar error logloss calculation to see if this change improves our predictions.\r\nComparison\r\nI am going to run this analysis look at an adjust ment value from zero to forty to see if add an this adjustment is better than none. The table below shows the logloss values from 2009 to 2018.\r\n\r\n\r\nLogloss analysis\r\n    l\r\n      logloss\r\n    0.00\r\n0.52990680.01\r\n0.53006370.05\r\n0.52973870.10\r\n0.52932930.15\r\n0.52921730.20\r\n0.52948050.25\r\n0.52913290.30\r\n0.52924710.40\r\n0.52966180.50\r\n0.53033100.75\r\n0.5328319Table by Colin Kohoutek\r\n    \r\n\r\nWhile not a huge impact, we do see that modifying the adjustment based on the line does improve our ability to predict results. Filtering out the worst results allows a better look at what is the best multiplier to use.\r\n\r\n\r\nFiltered logloss analysis\r\n    l\r\n      logloss\r\n    0.15\r\n0.52921730.20\r\n0.52948050.25\r\n0.52913290.30\r\n0.52924710.40\r\n0.5296618Table by Colin Kohoutek\r\n    \r\n\r\nDarker blue is a lower value and thus better. With that in mind it looks like .25 is the best option to choose for our adjust elo rankings.\r\nConclusion\r\nThis wraps up the look at making the best ranking system we can using the elo method. Going forward we will use more advanced models to improve our projections.\r\n\r\n\r\n\r\n",
+    "preview": {},
+    "last_modified": "2024-05-19T05:49:16-07:00",
+    "input_file": "adjusted-elo-rankings.knit.md"
+  },
+  {
     "path": "posts/2022-11-12-improving-on-our-elo-ratings/",
     "title": "Improving On Our Elo Ratings",
     "description": "A short description of the post.",

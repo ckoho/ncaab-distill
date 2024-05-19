@@ -1,0 +1,65 @@
+---
+title: "Adjusted Elo Rankings"
+description: |
+  Updating ranking based on performance versus expecations
+author: Colin Kohoutek
+date: 2024-01-15
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Introduction
+We previously looked at a few different ways to make our elo rankings more accurate with minor tweaks. Adjusting the rating up or down based on the result compared to the line was less accurate than just basing it off of winning and margin of victory. This says there is something predictive to winning games compared to performance versus expectation (beating the expected line, but losing). This post is going to evaluate an adjusted elo ranking that still goes up and done based on winning and losing, but adds in a multiplier based on performance verses the expected wine. For example, if you win, but by less than expected your ranking will increase, but by not as much as the normal method. For a post on the elo ranking see [here](https://ckohoutek.netlify.app/posts/2022-08-14-elo-rating-system/). 
+
+As an example, say two teams are playing on a neutral court with a rating delta of 100 points. This implies the higher ranked team will win about 64% of the time. Their expected margin of victory is 8.15 points. In this example we are going to use .25 as a multiplier. There are three cases to consider. These options are higher ranked team wins by more than 8, the higher ranked team wins by less than 8, and the lower ranked team outright wins. In the examples below we will say they won by 10, won by 6, and lost by 4. A reminder for all of these, ELO rankings adjustments are the same for both teams, just one is positive and the other is negative.
+
+Case 1: The higher ranked team wins by more than eight the adjustment will be higher than the normal value because they covered the spread based on the teams talent.
+$$Adjustment_{case1} = (1+.25) * log(10) * 25 * (1-.64)\approx 25.9$$
+Case 2: The higher ranked team won, but not by the spread. Thus their ranking will go up, but by a smaller amount.
+$$Adjustment_{case2}  = (1-.25) * log(6) * 25 * (1-.64)\approx 12.1$$
+Case 3: The lower ranked team won and so their ranking will go up and by a larger amount because they covered the spread as they were expected to lose.
+$$Adjustment_{case3} = (1+.25) * log(4) * 25 * (1-.32)\approx 29.46$$
+As cases 1 and 2 shows their is a large impact on the adjustment based on covering the spread. We need to perform a similar error logloss calculation to see if this change improves our predictions.
+
+
+# Comparison
+I am going to run this analysis look at an adjust ment value from zero to forty to see if add an this adjustment is better than none. The table below shows the logloss values from 2009 to 2018.
+
+```{r, eval = TRUE}
+library(tidyverse)
+library(vroom)
+library(fs)
+library(gt)
+library(gtExtras)
+
+df <- vroom("AdjustEloFullSummary.csv")
+df %>%
+  gt() %>%
+  tab_header(
+    title = "Logloss analysis") %>%
+  gt_color_rows(logloss,palette = "ggsci::default_gsea") %>%
+  tab_source_note(source_note = "Table by Colin Kohoutek")
+```
+
+While not a huge impact, we do see that modifying the adjustment based on the line does improve our ability to predict results. Filtering out the worst results allows a better look at what is the best multiplier to use.
+
+```{r, eval = TRUE}
+df <- vroom("AELOFilteredSummary.csv")
+df %>%
+  gt() %>%
+  tab_header(
+    title = "Filtered logloss analysis") %>%
+  gt_color_rows(logloss,palette = "ggsci::default_gsea") %>%
+  tab_source_note(source_note = "Table by Colin Kohoutek")
+
+```
+Darker blue is a lower value and thus better. With that in mind it looks like .25 is the best option to choose for our adjust elo rankings.
+
+# Conclusion
+This wraps up the look at making the best ranking system we can using the elo method. Going forward we will use more advanced models to improve our projections.

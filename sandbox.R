@@ -3,7 +3,7 @@ usethis::use_github()
 library(distill)
 distill::create_post("Home Court Advantage")
 distill::create_post(
-  "Improving On Our Elo Ratings",
+  "Adjusted Elo Rankings",
   author = "Colin Kohoutek",
   slug = "auto", # generates a website slug (URL)
   date_prefix = TRUE, # adds date for sorting
@@ -21,6 +21,8 @@ distill::create_post(
 )
 rename_post_dir("_posts/2022-09-05-home-court-advantage", date_prefix = "9/05/2022") 
 
+
+gitcreds::gitcreds_set()
 
 
 
@@ -560,3 +562,106 @@ ggplot(df1, aes(x=season, y=line)) + geom_point() +
                          plot.tag = element_text(face = "bold"),
                          plot.subtitle = element_text(size = 8))
   
+
+
+########################################################################
+###Adjusted Elo Rankings Log Loss calculation.                       ###
+###Comparing l values and to default.                                ###
+########################################################################
+
+df_aelo_sum <- NULL
+l_loop <- c(.01, .1, .2, .3, .4, .05, .5, .15, .25, .75, 0)
+for (l in l_loop){
+  regexp_path <- paste0("results_eoy_", l, ".*csv")
+  files <- fs::dir_ls(path = "../../Inputs/NCAA/aelo/", 
+                      regexp = regexp_path)
+  df_aelo <- vroom(files, altrep = FALSE)
+  df_aelo <- df_aelo %>%
+    mutate(eq1 = result * log(team2_odds),
+           eq2 = (1 - result) * log(1-team2_odds),
+           logloss = -(eq1 + eq2)
+    )
+  df_aelo <- df_aelo %>%
+    group_by(season) %>%
+    summarize(l = l,
+              ac = mean(logloss))
+  df_aelo_sum <- df_aelo_sum %>%
+    bind_rows(df_aelo)
+  
+}
+df_aelo_sum_filt <- df_aelo_sum %>%
+  filter(season > 2008) %>%
+  filter(season < 2019)
+ggplot(df_aelo_sum_filt, aes(x=season, y=ac )) + geom_point(aes(color = as_factor(l)))
+options(pillar.sigfig=5)
+
+df_aelo_summary <- df_aelo_sum_filt %>%
+  group_by(l) %>%
+  summarize(logloss = mean(ac))#
+write_csv(df_aelo_summary, 
+          "_posts/2024-01-15-adjusted-elo-rankings/AdjustEloFullSummary.csv")
+
+df_aelo_summary %>%
+  gt() %>%
+  gt_color_rows(logloss,palette = "ggsci::default_gsea")
+
+df_aelo_summary_filtered <- df_aelo_sum_filt %>%
+  filter(l < .45) %>%
+  fliter(l > .10) %>%
+  group_by(l) %>%
+  summarize(logloss = mean(ac))
+
+df_aelo_filtered <- df_aelo_sum_filt %>%
+  filter(l < .45) %>%
+  filter(l > .10)
+ggplot(df_aelo_filtered, aes(x=season, y=ac )) + 
+  geom_point(aes(color = as_factor(l))) +
+  labs(title = "Logloss Calculation", 
+       subtitle = "The line based elo is significantly higher (worse) than the default and autocorrelation methods",
+       x = "Season",
+       y = "Log Loss",
+       caption = "Colin Kohoutek, data from @sportsdataverse"
+  ) + theme_bw() + theme(plot.caption = element_text(face = "italic",
+                                                     size = 4,
+                                                     color = "grey"),
+                         plot.tag = element_text(face = "bold"),
+                         plot.subtitle = element_text(size = 4))
+
+
+
+write_csv(df_aelo_summary_filtered, 
+          "_posts/2024-01-15-adjusted-elo-rankings/AELOFilteredSummary.csv")
+
+
+df <- read_csv("_posts/2022-11-12-improving-on-our-elo-ratings/methods_logloss.csv")
+df_pivot <- data %>%
+  pivot_longer(!season, names_to = "group", values_to = "logloss")
+ggplot(df_pivot, aes(x=season, y=logloss)) + geom_point(aes(color = group)) + 
+  labs(title = "Logloss Calculation", 
+       subtitle = "The line based elo is significantly higher (worse) than the default and autocorrelation methods",
+       x = "Season",
+       y = "Log Loss",
+       caption = "Colin Kohoutek, data from @sportsdataverse"
+  ) + theme_bw() + theme(plot.caption = element_text(face = "italic",
+                                                     size = 4,
+                                                     color = "grey"),
+                         plot.tag = element_text(face = "bold"),
+                         plot.subtitle = element_text(size = 4))
+ggsave("_posts/2022-11-12-improving-on-our-elo-ratings/logloss_options.png")
+
+df_pivot <- data %>%
+  pivot_longer(!season, names_to = "group", values_to = "logloss") %>%
+  filter(group != "line")
+ggplot(df_pivot, aes(x=season, y=logloss)) + geom_point(aes(color = group)) + 
+  labs(title = "Logloss, Line Rating Removed", 
+       subtitle = "Autcorrelation is slightly worse than the normal rating system.",
+       x = "Season",
+       y = "Log Loss",
+       caption = "Colin Kohoutek, data from @sportsdataverse"
+  ) + theme_bw() + theme(plot.caption = element_text(face = "italic",
+                                                     size = 4,
+                                                     color = "grey"),
+                         plot.tag = element_text(face = "bold"),
+                         plot.subtitle = element_text(size = 4))
+
+

@@ -1,5 +1,5 @@
 ---
-title: "ELO Rating System"
+title: "Elo Rating System"
 description: |
   Explanation of initial Elo ranking system for NCAA Men's Basketball.
 author: Colin Kohoutek
