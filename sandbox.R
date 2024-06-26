@@ -19,7 +19,17 @@ distill::create_post(
   draft = TRUE, 
   edit = interactive()
 )
-rename_post_dir("_posts/2022-09-05-home-court-advantage", date_prefix = "9/05/2022") 
+distill::create_post(
+  "Vegas Line Power Rankings",
+  author = "Colin Kohoutek",
+  slug = "auto", # generates a website slug (URL)
+  date_prefix = TRUE, # adds date for sorting
+  draft = FALSE, 
+  edit = interactive()
+)
+#Update to correct date.
+distill::rename_post_dir("_posts/2022-09-05-vegas-line-power-rankings", 
+                         date_prefix = "6/17/2024") 
 
 
 gitcreds::gitcreds_set()
