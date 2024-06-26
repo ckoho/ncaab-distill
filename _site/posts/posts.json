@@ -1,5 +1,22 @@
 [
   {
+    "path": "posts/2022-09-05-vegas-line-power-rankings/",
+    "title": "Vegas Line Power Rankings",
+    "description": "You can use the lines of NFL games to create a power ranking of each NFL teams.",
+    "author": [
+      {
+        "name": "Colin Kohoutek",
+        "url": {}
+      }
+    ],
+    "date": "2024-06-17",
+    "categories": [],
+    "contents": "\r\nIntroduction\r\nOne information asymmetry we have is that Vegas has to publish lines on all games. You only have to bet the games you see an edge on. Because of this we are able to determine the power ranking of each team in the eyes of the sports book. Because the NFL is so popular, DraftKings has published lines on games for all 18 weeks. This should allow us to properly rank each team.\r\n#NFL Example\r\nFor example if in week 1 the Kansas City Chiefs are favored over the Baltimore Ravens by 3 points, and then in week 2 the Baltimore Ravens are favored over the Houston Texans by 1.5 points we can assume the Cheifs would be favored by 4.5 points over the Houston Texans.\r\n\r\n\r\n\r\n",
+    "preview": {},
+    "last_modified": "2024-06-26T06:35:07-06:00",
+    "input_file": "vegas-line-power-rankings.knit.md"
+  },
+  {
     "path": "posts/2024-01-15-adjusted-elo-rankings/",
     "title": "Adjusted Elo Rankings",
     "description": "Updating ranking based on performance versus expecations",
