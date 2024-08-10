@@ -29,7 +29,7 @@ distill::create_post(
 )
 #Update to correct date.
 distill::rename_post_dir("_posts/2022-09-05-vegas-line-power-rankings", 
-                         date_prefix = "6/17/2024") 
+                         date_prefix = "8/10/2024") 
 
 
 gitcreds::gitcreds_set()

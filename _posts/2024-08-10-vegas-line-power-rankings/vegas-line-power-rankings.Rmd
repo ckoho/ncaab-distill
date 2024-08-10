@@ -1,0 +1,81 @@
+---
+title: "Vegas Line Power Rankings"
+description: |
+  You can use the lines of NFL games to create a power ranking of each NFL teams.
+author: Colin Kohoutek
+date: 2024-08-10
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Introduction
+
+One information asymmetry we have is that Vegas has to publish lines on all games. You only have to bet the games you see an edge on. Because of this we are able to determine the power ranking of each team in the eyes of the sports book. Because the NFL is so popular, DraftKings has published lines on games for all 18 weeks. This should allow us to properly rank each team. With only one week of data we just know how the teams playing each other compare. As we add in a second week we learn more about how all the teams are compare to each other.
+
+# NFL Example
+For example if in week 1 the Kansas City Chiefs are favored over the Baltimore Ravens by 3 points, and then in week 2 the Baltimore Ravens are favored over the Houston Texans by 1.5 points we can assume the Chiefs would be favored by 4.5 points over the Houston Texans. The more weeks of data you have the more accurate the ranking will be.  This post will look into how the rankings change as we add more data into the sample. Looking at a few teams that play each other twice at home and road it looks like a 3 point swing, so I am going to use 1.5 points for a home field advantage. Adding that in we can see how teams compare to each other. We need a few weeks data to see how teams interconnect. We also need to loop a few teams to iterate over the data so  the later week's information factors into the early weeks data. I am going to look at how many weeks of information we need to make predictions and how many times we need to loop over that data. 
+
+First, we are going to see how the predictions improves when adding in more weeks. I am going to look at two, three, and four weeks of data.  All of these datasets will then predict week 6 games to see the predicted versus actual line from Vegas. The table below shows the absolute value error mean and max values.
+
+```{r, eval = TRUE}
+library(tidyverse)
+library(vroom)
+library(fs)
+library(gt)
+library(gtExtras)
+
+df <- vroom("num_weeks_comparison_summary.csv")
+df %>%
+  gt() %>%
+  tab_header(
+    title = "Different Number Of Weeks In Prediction") %>%
+  gt_color_rows(error,palette = "ggsci::default_gsea") %>%
+  gt_color_rows(max,palette = "ggsci::default_gsea") %>%
+  tab_source_note(source_note = "Table by Colin Kohoutek")
+```
+As expected, adding in more weeks makes for a more accurate projection. Including four weeks gets the mean error down to around .67 points. Thaat's pretty good and we would only expect it to improve if we added in more data.
+
+Next we want to evaluate how many times to iterate of the data before all forward looking weeks are factored into the early ones.
+
+```{r, eval = TRUE}
+df <- vroom("4weeks_iteration_summary.csv")
+ggplot(df,  aes(iteration, mean)) + 
+  geom_point() + 
+  labs(title = "Mean Error Over Differnt Number Of Iterations",
+              #subtitle = "Plot of length by dose",
+              caption = "Plot by Colin Kohoutek")
+  #tab_source_note(source_note = "Table by Colin Kohoutek")
+```
+Even just iterating once gets a pretty accurate estimation (error of ~.73). So it makes sense that we only need to iterate a few times to find the results steadying out.
+
+# Power Rankings
+I only scraped in four weeks of lines so we are going to use that to rank the teams as they stand right now. Obviously, add in more weeks would make for a more accurate ranking, but it shouldn't change too much.
+
+```{r, eval = TRUE}
+library(tidyverse)
+library(vroom)
+library(fs)
+library(gt)
+library(gtExtras)
+
+df <- vroom("100_nfl_week4_ratings.csv")
+df %>%
+  arrange(desc(Rating)) %>%
+  gt() %>%
+  tab_header(
+    title = "NFL Pre Season Rankings") %>%
+  gt_color_rows(Rating,palette = "ggsci::default_gsea") %>%
+  tab_source_note(source_note = "Table by Colin Kohoutek")
+```
+No surprises, the two best teams are San Francisco and Kansas City. The seem to be in a tier of their own entering the season (one point better than Baltimore). It will be interesting to check on these rankings after few weeks of games to see how much the rankings change.
+
+
+# Limitations
+This is a rather simplistic way to look at ranking teams. Looking at the results it is pretty accurate. It does not factor in the play styles of the teams that might favor one team more than the average game. I believe the impact of that is pretty minor compared to the general ranking of each team, but adding more weeks of games will also help account for that to make the ranking more accurate. This ranking will not be able to catch those impact when predicting the lines for games. A more granular approach is needed.
+
